@@ -48,6 +48,7 @@ module.exports = {
     }],
     "eol-last": 0,
     "func-call-spacing": [1, "never"],
+    "jsx-quotes": [1, "prefer-double"],
     "indent": [1, 2, {
       SwitchCase: 1,
       VariableDeclarator: 1,
@@ -71,6 +72,7 @@ module.exports = {
       ignoreComments: false
     }],
     "key-spacing": [1, { beforeColon: false, afterColon: true }],
+    "linebreak-style": 0,
     "max-len": [1, 100],
     "no-extra-semi": 1,
     "no-magic-numbers": 0, // disabled in favor @typescript-eslint/no-magic-numbers rule
@@ -118,6 +120,7 @@ module.exports = {
     }],
     "import/prefer-default-export": 0,
 
+    "react/jsx-boolean-value": [1, "never", { always: [] }],
     "react/jsx-closing-bracket-location": 1,
     "react/jsx-closing-tag-location": 1,
     "react/jsx-indent": [1, 2],

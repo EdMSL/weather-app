@@ -1,7 +1,7 @@
 {
-  "name": "react-typescript-boilerplate",
+  "name": "weather-app",
   "version": "1.0.0",
-  "description": "React boilerplate with TypeScript for new projects",
+  "description": "Simple weather app",
   "main": "index.tsx",
   "author": "Eduard Trayt <eduard2011rus@gmail.com> (https://github.com/EdMSL)",
   "repository": {
@@ -9,7 +9,11 @@
     "url": "https://github.com/EdMSL/react-typescript-boilerplate"
   },
   "license": "MIT",
-  "keywords": ["react", "redux", "typescript"],
+  "keywords": [
+    "react",
+    "redux",
+    "typescript"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",

@@ -1,10 +1,44 @@
 import { createReducer } from 'reduxsauce';
 
+import { DEFAULT_REQUEST_ERROR, DEFAULT_CURRENT_WEATHER } from '$constants/defaultParameters';
 import { CONTENT_TYPES } from '$modules/content/types';
 import * as CONTENT_ACTIONS from '$modules/content/actions';
 
+interface IWeather {
+  description: string,
+  icon: string,
+  id: number,
+  main: string,
+}
+
+interface IWind {
+  deg: number,
+  speed: number,
+}
+
+export interface ICurrentWeather {
+  city: string,
+  cityId: number,
+  clouds: number,
+  temp: number,
+  weather: IWeather,
+  wind: IWind,
+}
+
+// export interface IFiveDaysForecast {
+
+// }
+
+export interface IRequestError {
+  status: number,
+  statusText: string,
+}
+
 export type IContentRootState = Readonly<{
-  view: string,
+  currentWeather: ICurrentWeather,
+  fiveDaysForecast,
+  lastCity: string,
+  requestError: IRequestError,
 }>;
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -15,20 +49,50 @@ interface IActionHandler<T> {
   (state: IContentRootState, payload: UnsafeReturnType<T>): IContentRootState,
 }
 
-const changeView: IActionHandler<typeof CONTENT_ACTIONS.changeView> = (
+const setCurrentWeather: IActionHandler<typeof CONTENT_ACTIONS.setCurrentWeather> = (
   state,
-  { payload: view },
+  { payload: currentWeather },
 ) => ({
   ...state,
-  view,
+  currentWeather,
+});
+
+const setFiveDaysForecast: IActionHandler<typeof CONTENT_ACTIONS.setFiveDaysForecast> = (
+  state,
+  { payload: fiveDaysForecast },
+) => ({
+  ...state,
+  fiveDaysForecast,
+});
+
+const setLastCity: IActionHandler<typeof CONTENT_ACTIONS.setLastCity> = (
+  state,
+  { payload: lastCity },
+) => ({
+  ...state,
+  lastCity,
+});
+
+const setRequestError: IActionHandler<typeof CONTENT_ACTIONS.setRequestError> = (
+  state,
+  { payload: requestError },
+) => ({
+  ...state,
+  requestError,
 });
 
 const HANDLERS = {
-  [CONTENT_TYPES.CHANGE_VIEW]: changeView,
+  [CONTENT_TYPES.SET_CURRENT_WEATHER]: setCurrentWeather,
+  [CONTENT_TYPES.SET_FIVE_DAYS_FORECAST]: setFiveDaysForecast,
+  [CONTENT_TYPES.SET_LAST_CITY]: setLastCity,
+  [CONTENT_TYPES.SET_REQUEST_ERROR]: setRequestError,
 };
 
 const INITIAL_STATE: IContentRootState = {
-  view: 'react',
+  currentWeather: DEFAULT_CURRENT_WEATHER,
+  fiveDaysForecast: {},
+  lastCity: '',
+  requestError: DEFAULT_REQUEST_ERROR,
 };
 
-export const contentReducer = createReducer(INITIAL_STATE, HANDLERS);
+export const contentReducer = createReducer<IContentRootState>(INITIAL_STATE, HANDLERS);

@@ -12,16 +12,16 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { PersistConfig, Persistor } from 'redux-persist/es/types';
 
-import { userReducer, IUserRootState } from '$modules/user/reducer';
+// import { userReducer, IUserRootState } from '$modules/user/reducer';
 import { contentReducer, IContentRootState } from '$modules/content/reducer';
-import userSaga from '$modules/user/sagas';
+// import userSaga from '$modules/user/sagas';
 import contentSaga from '$modules/content/sagas';
 
-const userPersistConfig: PersistConfig<IUserRootState> = {
-  key: 'user',
-  whitelist: ['isSidebarMinimized', 'userAvatar'],
-  storage,
-};
+// const userPersistConfig: PersistConfig<IUserRootState> = {
+//   key: 'user',
+//   whitelist: ['isSidebarMinimized', 'userAvatar'],
+//   storage,
+// };
 
 const contentPersistConfig: PersistConfig<IContentRootState> = {
   key: 'content',
@@ -33,7 +33,7 @@ export const sagaMiddleware = createSagaMiddleware();
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-  user: persistReducer(userPersistConfig, userReducer),
+  // user: persistReducer(userPersistConfig, userReducer),
   content: persistReducer(contentPersistConfig, contentReducer),
   router: connectRouter(history),
 });
@@ -58,7 +58,7 @@ export const store = createStore(
 );
 
 export function configureStore(): { store: Store<IAppState>, persistor: Persistor, } {
-  sagaMiddleware.run(userSaga);
+  // sagaMiddleware.run(userSaga);
   sagaMiddleware.run(contentSaga);
 
   const persistor = persistStore(store);

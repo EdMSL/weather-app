@@ -3,10 +3,41 @@ import { IContentRootState } from '$modules/content/reducer';
 
 interface IActionReturnType<T> {
   type: string,
-  payload: T,
+  payload?: T,
 }
 
-export const changeView = (view: IContentRootState['view']): IActionReturnType<typeof view> => ({
-  type: CONTENT_TYPES.CHANGE_VIEW,
-  payload: view,
+export const getCurrentWeather = (): IActionReturnType<{}> => ({
+  type: CONTENT_TYPES.GET_CURRENT_WEATHER,
+});
+
+export const getFiveDaysForecast = (): IActionReturnType<{}> => ({
+  type: CONTENT_TYPES.GET_FIVE_DAYS_FORECAST,
+});
+
+export const setCurrentWeather = (
+  currentWeather: IContentRootState['currentWeather'],
+): IActionReturnType<typeof currentWeather> => ({
+  type: CONTENT_TYPES.SET_CURRENT_WEATHER,
+  payload: currentWeather,
+});
+
+export const setFiveDaysForecast = (
+  fiveDaysForecast: IContentRootState['fiveDaysForecast'],
+): IActionReturnType<typeof fiveDaysForecast> => ({
+  type: CONTENT_TYPES.SET_FIVE_DAYS_FORECAST,
+  payload: fiveDaysForecast,
+});
+
+export const setLastCity = (
+  lastCity: IContentRootState['lastCity'],
+): IActionReturnType<typeof lastCity> => ({
+  type: CONTENT_TYPES.SET_LAST_CITY,
+  payload: lastCity,
+});
+
+export const setRequestError = (
+  requestError: IContentRootState['requestError'],
+): IActionReturnType<typeof requestError> => ({
+  type: CONTENT_TYPES.SET_REQUEST_ERROR,
+  payload: requestError,
 });

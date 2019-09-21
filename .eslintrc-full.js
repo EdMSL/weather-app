@@ -27,6 +27,7 @@ module.exports = {
     "@typescript-eslint",
   ],
   rules: {
+    "linebreak-style": 0,
     "max-len": [1, 100],
     "no-multiple-empty-lines": [2, { max: 1}],
     "object-curly-newline": [2, {

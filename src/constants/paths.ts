@@ -5,6 +5,6 @@ export const PATHS = {
 };
 
 export const PathName = {
-  REACT_VIEW: '/react',
-  REDUX_VIEW: '/redux',
+  CURRENT_WEATHER: '/current',
+  FIVE_DAY_FORECAST: '/five_day_forecast',
 };

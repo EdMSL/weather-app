@@ -1,13 +1,13 @@
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 
-import { ApiGithubRequestUrl } from './constants';
+import { ApiOpenWeatherRequestUrl } from './constants';
 
 export const client = (props: AxiosRequestConfig): AxiosPromise => axios({
   method: props.method,
-  baseURL: `${ApiGithubRequestUrl.BASE}/`,
+  baseURL: `${ApiOpenWeatherRequestUrl.BASE}/`,
   url: props.url,
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'text/plain',
   },
   data: props.data,
 });
