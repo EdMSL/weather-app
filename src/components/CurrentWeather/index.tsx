@@ -60,7 +60,10 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
           Get weather
         </Button>
       </form>
-      <p>Current weather</p>
+      <div className={styles.weather__view}>
+        <h2>Current weather</h2>
+
+      </div>
     </React.Fragment>
   );
 };

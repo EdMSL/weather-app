@@ -21,7 +21,7 @@ interface IResponseMainFiveDaysForecast extends IResponseMainCurrentWeather {
   temp_kf: number,
 }
 
-interface IResposeFiveDaysForecastListItem {
+export interface IResponseFiveDaysForecastListItem {
   clouds: IResponseClouds,
   dt: number,
   dt_txt: string,
@@ -88,7 +88,7 @@ export interface IFiveDaysForecastRequestData {
   cod: string,
   message: number,
   cnt: number,
-  list: IResposeFiveDaysForecastListItem[],
+  list: IResponseFiveDaysForecastListItem[],
 }
 
 const API_KEY = '09864f104fd238ceb72091abd292903c';

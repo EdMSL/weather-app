@@ -1,5 +1,10 @@
 import { CONTENT_TYPES } from '$modules/content/types';
-import { IContentRootState } from '$modules/content/reducer';
+import {
+  IContentRootState,
+  IFiveDaysForecast,
+  IRequestError,
+  ICurrentWeather,
+} from '$modules/content/reducer';
 
 interface IActionReturnType<T> {
   type: string,
@@ -15,14 +20,14 @@ export const getFiveDaysForecast = (): IActionReturnType<{}> => ({
 });
 
 export const setCurrentWeather = (
-  currentWeather: IContentRootState['currentWeather'],
+  currentWeather: ICurrentWeather,
 ): IActionReturnType<typeof currentWeather> => ({
   type: CONTENT_TYPES.SET_CURRENT_WEATHER,
   payload: currentWeather,
 });
 
 export const setFiveDaysForecast = (
-  fiveDaysForecast: IContentRootState['fiveDaysForecast'],
+  fiveDaysForecast: IFiveDaysForecast,
 ): IActionReturnType<typeof fiveDaysForecast> => ({
   type: CONTENT_TYPES.SET_FIVE_DAYS_FORECAST,
   payload: fiveDaysForecast,
@@ -36,7 +41,7 @@ export const setLastCity = (
 });
 
 export const setRequestError = (
-  requestError: IContentRootState['requestError'],
+  requestError: IRequestError,
 ): IActionReturnType<typeof requestError> => ({
   type: CONTENT_TYPES.SET_REQUEST_ERROR,
   payload: requestError,

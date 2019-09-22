@@ -57,7 +57,7 @@ const UnconnectedApp: React.FunctionComponent<IAppProps> = ({
             5 day weather forecast
           </NavLink>
         </section>
-        <section className={classNames(styles.view)}>
+        <section className={classNames(styles.weather)}>
           <Switch>
             <Route
               exact

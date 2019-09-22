@@ -1,6 +1,9 @@
 import { createReducer } from 'reduxsauce';
 
-import { DEFAULT_REQUEST_ERROR, DEFAULT_CURRENT_WEATHER } from '$constants/defaultParameters';
+import {
+  DEFAULT_REQUEST_ERROR,
+  DEFAULT_CURRENT_WEATHER, DEFAULT_FIVE_DAYS_FORECAST,
+} from '$constants/defaultParameters';
 import { CONTENT_TYPES } from '$modules/content/types';
 import * as CONTENT_ACTIONS from '$modules/content/actions';
 
@@ -20,14 +23,25 @@ export interface ICurrentWeather {
   city: string,
   cityId: number,
   clouds: number,
+  country: string,
   temp: number,
   weather: IWeather,
   wind: IWind,
 }
 
-// export interface IFiveDaysForecast {
+export interface IFiveDaysForecastListItem {
+  clouds: number,
+  temp: number,
+  weather: IWeather,
+  wind: IWind,
+}
 
-// }
+export interface IFiveDaysForecast {
+  city: string,
+  cityId: number,
+  country: string,
+  list: IFiveDaysForecastListItem[],
+}
 
 export interface IRequestError {
   status: number,
@@ -36,7 +50,7 @@ export interface IRequestError {
 
 export type IContentRootState = Readonly<{
   currentWeather: ICurrentWeather,
-  fiveDaysForecast,
+  fiveDaysForecast: IFiveDaysForecast,
   lastCity: string,
   requestError: IRequestError,
 }>;
@@ -90,7 +104,7 @@ const HANDLERS = {
 
 const INITIAL_STATE: IContentRootState = {
   currentWeather: DEFAULT_CURRENT_WEATHER,
-  fiveDaysForecast: {},
+  fiveDaysForecast: DEFAULT_FIVE_DAYS_FORECAST,
   lastCity: '',
   requestError: DEFAULT_REQUEST_ERROR,
 };
