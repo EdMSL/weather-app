@@ -10,16 +10,19 @@ const styles = require('./styles.module.scss');
 interface IStateProps {
   currentWeather: IAppState['content']['currentWeather'],
   lastCity: IAppState['content']['lastCity'],
+  requestError: IAppState['content']['requestError'],
 }
 
 const mapStateToProps = ({
   content: {
     currentWeather,
     lastCity,
+    requestError,
   },
 }: IAppState): IStateProps => ({
   currentWeather,
   lastCity,
+  requestError,
 });
 
 const mapDispatchToProps = {
@@ -30,8 +33,9 @@ const mapDispatchToProps = {
 export type IProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
 const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
-  lastCity,
   currentWeather,
+  lastCity,
+  requestError,
   getCurrentWeather,
   setLastCity,
 }) => {
@@ -56,13 +60,46 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
           value={lastCity}
           onChange={onCityInputChange}
         />
+        {
+          requestError.status > 0 && (
+            <span>{`City ${requestError.statusText}`}</span>
+          )
+        }
         <Button isSubmit>
           Get weather
         </Button>
       </form>
       <div className={styles.weather__view}>
-        <h2>Current weather</h2>
+        <h2 className={styles.weather__title}>
+          Current weather
+        </h2>
+        {
+          currentWeather.city && (
+            <React.Fragment>
 
+              <div className={styles.weather__card}>
+                <p className={styles.weather__city}>
+                  {currentWeather.city}
+                </p>
+                <p className={styles.weather__country}>
+                  {currentWeather.country}
+                </p>
+                <p className={styles.weather__temp}>
+                  {currentWeather.temp}
+                </p>
+                <div>
+                  <img
+                    src={`http://openweathermap.org/img/wn/${currentWeather.weather.icon}@2x.png`}
+                    alt="current weather"
+                  />
+                </div>
+                <p className={styles.weather__temp}>
+                  {currentWeather.weather.description}
+                </p>
+              </div>
+            </React.Fragment>
+          )
+        }
       </div>
     </React.Fragment>
   );

@@ -23,7 +23,11 @@ import { IAppState } from '$redux/store';
 const getState = (state: IAppState): IAppState => state;
 
 function* getWeatherDataSaga(type: string): SagaIterator {
-  const { content: { lastCity } }: IAppState = yield select(getState);
+  const { content: { lastCity, requestError } }: IAppState = yield select(getState);
+
+  if (requestError.status > 0) {
+    yield put(CONTENT_ACTIONS.setRequestError(DEFAULT_REQUEST_ERROR));
+  }
 
   if (type === CONTENT_TYPES.GET_CURRENT_WEATHER) {
     return yield call(apiGetCurrentWeather, { city: lastCity });
@@ -33,8 +37,6 @@ function* getWeatherDataSaga(type: string): SagaIterator {
 }
 // TODO: Try typing weatherData
 function* setWeatherSaga(weatherData: AxiosResponse, type: string): SagaIterator {
-  const { content: { requestError } }: IAppState = yield select(getState);
-
   if (!weatherData) return;
 
   if (weatherData.status < ApiErrorStatusCode.START_ERROR_CODES) {
@@ -42,12 +44,6 @@ function* setWeatherSaga(weatherData: AxiosResponse, type: string): SagaIterator
       yield put(CONTENT_ACTIONS.setCurrentWeather(generateCurrentWeatherObject(weatherData.data)));
     } else if (type === CONTENT_TYPES.GET_FIVE_DAYS_FORECAST) {
       yield put(CONTENT_ACTIONS.setFiveDaysForecast(generateFiveDaysForecastObject(weatherData.data)));
-    } else {
-      return;
-    }
-
-    if (requestError.status > ApiErrorStatusCode.START_ERROR_CODES) {
-      yield put(CONTENT_ACTIONS.setRequestError(DEFAULT_REQUEST_ERROR));
     }
   } else {
     yield put(CONTENT_ACTIONS.setRequestError(generateRequestErrorObject(weatherData)));
