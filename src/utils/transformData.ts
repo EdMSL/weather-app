@@ -33,6 +33,8 @@ const generateFiveDaysForecastListItemObject = (
   item: IResponseFiveDaysForecastListItem,
 ): IFiveDaysForecastListItem => ({
   clouds: item.clouds.all,
+  date: item.dt,
+  dateTxt: item.dt_txt,
   temp: item.main.temp,
   wind: item.wind,
   weather: item.weather[0],

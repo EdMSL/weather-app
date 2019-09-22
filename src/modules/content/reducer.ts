@@ -31,6 +31,8 @@ export interface ICurrentWeather {
 
 export interface IFiveDaysForecastListItem {
   clouds: number,
+  date: number,
+  dateTxt: string,
   temp: number,
   weather: IWeather,
   wind: IWind,

@@ -1,16 +1,21 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
-import { IAppState } from '$redux/store';
-import * as CONTENT_ACTION from '$modules/content/actions';
 import { Button } from '$components/UI/Button';
+import * as CONTENT_ACTION from '$modules/content/actions';
+import {
+  IContentRootState,
+  ICurrentWeather,
+  IRequestError,
+} from '$modules/content/reducer';
+import { IAppState } from '$redux/store';
 
 const styles = require('./styles.module.scss');
 
 interface IStateProps {
-  currentWeather: IAppState['content']['currentWeather'],
-  lastCity: IAppState['content']['lastCity'],
-  requestError: IAppState['content']['requestError'],
+  currentWeather: ICurrentWeather,
+  lastCity: IContentRootState['lastCity'],
+  requestError: IRequestError,
 }
 
 const mapStateToProps = ({
@@ -76,16 +81,12 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
         {
           currentWeather.city && (
             <React.Fragment>
-
               <div className={styles.weather__card}>
                 <p className={styles.weather__city}>
-                  {currentWeather.city}
-                </p>
-                <p className={styles.weather__country}>
-                  {currentWeather.country}
+                  {`${currentWeather.city}, ${currentWeather.country}`}
                 </p>
                 <p className={styles.weather__temp}>
-                  {currentWeather.temp}
+                  {Math.round(currentWeather.temp)}
                 </p>
                 <div>
                   <img
