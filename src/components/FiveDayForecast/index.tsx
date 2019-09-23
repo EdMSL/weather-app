@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-import { Button } from '$components/UI/Button';
+import { WeatherSearch } from '$components/WeatherSearch';
 import * as CONTENT_ACTION from '$modules/content/actions';
 import {
   IContentRootState,
@@ -43,42 +43,19 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
   requestError,
   getFiveDaysForecast,
   setLastCity,
-}) => {
-  const onFormSubmit = useCallback((event) => {
-    event.preventDefault();
-    getFiveDaysForecast();
-  }, [getFiveDaysForecast]);
-
-  const onCityInputChange = useCallback(({ target: { value } }) => {
-    setLastCity(value);
-  }, [setLastCity]);
-
-  return (
-    <React.Fragment>
-      <form
-        className={styles.weather__form}
-        onSubmit={onFormSubmit}
-      >
-        <input
-          type="text"
-          name="fiveDaysForecast"
-          value={lastCity}
-          onChange={onCityInputChange}
-        />
-        {
-          requestError.status > 0 && (
-            <span>{`City ${requestError.statusText}`}</span>
-          )
-        }
-        <Button isSubmit>
-          Get weather
-        </Button>
-      </form>
-      <div className={styles.weather__view}>
-        <h2 className={styles.weather__title}>
+}) => (
+  <React.Fragment>
+    <WeatherSearch
+      lastCity={lastCity}
+      requestError={requestError}
+      getWeather={getFiveDaysForecast}
+      setLastCity={setLastCity}
+    />
+    <div className={styles.weather__view}>
+      <h2 className={styles.weather__title}>
           5 deys forecast
-        </h2>
-        {
+      </h2>
+      {
           fiveDaysForecast.city && (
             <React.Fragment>
               <div className={styles.weather__card}>
@@ -102,10 +79,9 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
             </React.Fragment>
           )
         }
-      </div>
-    </React.Fragment>
-  );
-};
+    </div>
+  </React.Fragment>
+);
 
 export const FiveDayForecast = connect(
   mapStateToProps,

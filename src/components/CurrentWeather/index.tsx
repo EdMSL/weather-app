@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-import { Button } from '$components/UI/Button';
+import { WeatherSearch } from '$components/WeatherSearch';
 import { Icon } from '$components/UI/Icon';
 import * as CONTENT_ACTION from '$modules/content/actions';
 import {
@@ -45,43 +45,19 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
   requestError,
   getCurrentWeather,
   setLastCity,
-}) => {
-  const onFormSubmit = useCallback((event) => {
-    event.preventDefault();
-    getCurrentWeather();
-  }, [getCurrentWeather]);
-
-  const onCityInputChange = useCallback(({ target: { value } }) => {
-    setLastCity(value);
-  }, [setLastCity]);
-
-  return (
-    <React.Fragment>
-      <form
-        className={styles.weather__form}
-        onSubmit={onFormSubmit}
-      >
-        <input
-          className={styles.weather__input}
-          type="text"
-          name="currentWeather"
-          value={lastCity}
-          onChange={onCityInputChange}
-        />
-        {
-          requestError.status > 0 && (
-            <span>{`City ${requestError.statusText}`}</span>
-          )
-        }
-        <Button isSubmit>
-          Get weather
-        </Button>
-      </form>
-      <div className={styles.weather__view}>
-        <h2 className={styles.weather__title}>
+}) => (
+  <React.Fragment>
+    <WeatherSearch
+      lastCity={lastCity}
+      requestError={requestError}
+      getWeather={getCurrentWeather}
+      setLastCity={setLastCity}
+    />
+    <div className={styles.weather__view}>
+      <h2 className={styles.weather__title}>
           Current weather
-        </h2>
-        {
+      </h2>
+      {
           currentWeather.city && (
             <div className={styles.weather__card}>
               <p className={styles.weather__city}>
@@ -107,10 +83,9 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
             </div>
           )
         }
-      </div>
-    </React.Fragment>
-  );
-};
+    </div>
+  </React.Fragment>
+);
 
 export const CurrentWeather = connect(
   mapStateToProps,

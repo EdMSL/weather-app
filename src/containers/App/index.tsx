@@ -19,24 +19,29 @@ const styles = require('./styles.module.scss');
 
 interface IStateProps {
   currentWeather: IAppState['content']['currentWeather'],
-  fiveDaysForecast: IAppState['content']['fiveDaysForecast'],
+  pathname: string,
 }
 
 const mapStateToProps = ({
-  content: { currentWeather, fiveDaysForecast },
+  content: { currentWeather },
+  router: { location: { pathname } },
 }: IAppState): IStateProps => ({
   currentWeather,
-  fiveDaysForecast,
+  pathname,
 });
 
 export type IAppProps = ReturnType<typeof mapStateToProps>;
 
 const UnconnectedApp: React.FunctionComponent<IAppProps> = ({
   currentWeather,
-  fiveDaysForecast,
+  pathname,
 }) => (
   <ConnectedRouter history={history}>
-    <main>
+    <main className={classNames(
+      styles.main,
+      pathname === PathName.CURRENT_WEATHER && styles[`main--${currentWeather.weather.main.toLowerCase()}`],
+    )}
+    >
       <div className="main-wrapper">
         <h1 className={styles.main__title}>Weather App</h1>
         <section className={styles.router}>
