@@ -1,6 +1,7 @@
 .main__title {
-  font-size: 20px;
-  line-height: 30px;
+  @include reset-indents;
+  font-size: 25px;
+  line-height: 35px;
   font-weight: 700;
 }
 
@@ -40,5 +41,7 @@
 }
 
 .weather {
+  padding-top: 20px;
+
   text-align: center;
 }

@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { Button } from '$components/UI/Button';
+import { Icon } from '$components/UI/Icon';
 import * as CONTENT_ACTION from '$modules/content/actions';
 import {
   IContentRootState,
@@ -9,6 +10,7 @@ import {
   IRequestError,
 } from '$modules/content/reducer';
 import { IAppState } from '$redux/store';
+import { generateCountryNameForSprite, toStringWithFirstUppercaseLetter } from '$utils/strings';
 
 const styles = require('./styles.module.scss');
 
@@ -60,6 +62,7 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
         onSubmit={onFormSubmit}
       >
         <input
+          className={styles.weather__input}
           type="text"
           name="currentWeather"
           value={lastCity}
@@ -80,25 +83,28 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
         </h2>
         {
           currentWeather.city && (
-            <React.Fragment>
-              <div className={styles.weather__card}>
-                <p className={styles.weather__city}>
-                  {`${currentWeather.city}, ${currentWeather.country}`}
-                </p>
-                <p className={styles.weather__temp}>
-                  {Math.round(currentWeather.temp)}
-                </p>
-                <div>
-                  <img
-                    src={`http://openweathermap.org/img/wn/${currentWeather.weather.icon}@2x.png`}
-                    alt="current weather"
-                  />
-                </div>
-                <p className={styles.weather__temp}>
-                  {currentWeather.weather.description}
-                </p>
+            <div className={styles.weather__card}>
+              <p className={styles.weather__city}>
+                {currentWeather.city}
+              </p>
+              <Icon
+                className={styles.weather__flag}
+                icon={generateCountryNameForSprite(currentWeather.country)}
+              />
+              <p className={styles.weather__temp}>
+                {Math.round(currentWeather.temp)}
+                <sup>&#176;</sup>
+              </p>
+              <div className="levitation-animation">
+                <img
+                  src={`http://openweathermap.org/img/wn/${currentWeather.weather.icon}@2x.png`}
+                  alt="current weather"
+                />
               </div>
-            </React.Fragment>
+              <p className={styles.weather__description}>
+                {toStringWithFirstUppercaseLetter(currentWeather.weather.description)}
+              </p>
+            </div>
           )
         }
       </div>

@@ -1,13 +1,10 @@
-.rotate-animation {
-  animation: rotate 20s linear;
+.levitation-animation {
+  animation: levitation 2s linear infinite;
+  animation-direction: alternate;
 }
 
-@keyframes rotate {
-  0% {
-    transform: rotate(0);
-  }
-
+@keyframes levitation {
   100% {
-    transform: rotate(360deg);
+    transform: translate(5px, -5px);
   }
 }

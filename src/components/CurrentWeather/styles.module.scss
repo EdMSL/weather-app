@@ -3,3 +3,57 @@
   flex-direction: column;
   align-items: center;
 }
+
+.weather__input {
+  width: 300px;
+  margin-bottom: 10px;
+  padding: 5px;
+
+  border: 1px solid $primary-color;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 1px $primary-color;
+  }
+}
+
+.weather__card {
+  width: 300px;
+  margin: 0 auto;
+  padding: 10px 20px;
+
+  background-color: $primary-color;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.weather__city,
+.weather__temp,
+.weather__description {
+  @include reset-indents;
+}
+
+.weather__city {
+  margin-bottom: 10px;
+
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+.weather__flag {
+  margin-bottom: 20px;
+}
+
+.weather__temp {
+  margin-bottom: 5px;
+
+  font-size: 35px;
+  line-height: 35px;
+  font-weight: 700;
+}
+
+.weather__description {
+  font-weight: 700;
+}

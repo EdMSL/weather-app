@@ -54,7 +54,7 @@ const UnconnectedApp: React.FunctionComponent<IAppProps> = ({
             className={styles.router__button}
             activeClassName={styles['router__button--active']}
           >
-            5 day weather forecast
+            5 day forecast
           </NavLink>
         </section>
         <section className={classNames(styles.weather)}>

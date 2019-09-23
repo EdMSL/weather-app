@@ -9,6 +9,8 @@
   border: none;
   outline: none;
 
+  cursor: pointer;
+
   &:hover,
   &:focus {
     background-color: tint-func($button-main-bg-color, 30%);
