@@ -1,24 +1,6 @@
 .main {
   background-size: cover;
   background-attachment: fixed;
-
-  &--clear {
-    background-image: url("~$images/decoration/clear-sky@1x.jpg");
-
-    animation: show 0.5s linear;
-  }
-
-  &--clouds {
-    background-image: url("~$images/decoration/clouds@1x.jpg");
-
-    animation: show 0.5s linear;
-  }
-
-  &--rain {
-    background-image: url("~$images/decoration/rain@1x.jpg");
-
-    animation: show 0.5s linear;
-  }
 }
 
 .main__title {

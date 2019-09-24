@@ -11,6 +11,7 @@ import {
   IFiveDaysForecastListItem,
   IFiveDaysForecast,
 } from '$modules/content/reducer';
+import { MONTHS } from '$constants/date';
 
 export const generateRequestErrorObject = (data: AxiosResponse): IRequestError => ({
   status: data.status,
@@ -48,3 +49,9 @@ export const generateFiveDaysForecastObject = (
   country: data.city.country,
   list: data.list.map(generateFiveDaysForecastListItemObject),
 });
+
+export const generateDateTxt = (date: string): string => {
+  const newDate = new Date(date);
+
+  return `${newDate.getDate()} ${MONTHS[newDate.getMonth()]}`;
+};

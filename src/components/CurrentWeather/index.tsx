@@ -75,6 +75,7 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
                 <img
                   src={`http://openweathermap.org/img/wn/${currentWeather.weather.icon}@2x.png`}
                   alt="current weather"
+                  title={currentWeather.weather.description}
                 />
               </div>
               <p className={styles.weather__description}>

@@ -16,4 +16,13 @@
   &:focus {
     box-shadow: 0 0 0 1px $primary-color;
   }
+
+  &--error {
+    border-color: rgb(218, 0, 0);
+
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 0 1px rgb(218, 0, 0);
+    }
+  }
 }

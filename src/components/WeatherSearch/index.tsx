@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
+import classNames from 'classnames';
 
 import { Button } from '$components/UI/Button';
 import * as CONTENT_ACTIONS from '$modules/content/actions';
@@ -19,14 +20,24 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
   getWeather,
   setLastCity,
 }) => {
+  const [inputError, setInputError] = useState<boolean>(false);
+
   const onFormSubmit = useCallback((event) => {
     event.preventDefault();
-    getWeather();
-  }, [getWeather]);
+    if (!inputError) {
+      getWeather();
+    }
+  }, [getWeather, inputError]);
 
   const onCityInputChange = useCallback(({ target: { value } }) => {
+    if (/[^a-z]+/i.test(value)) {
+      setInputError(true);
+    } else if (inputError) {
+      setInputError(false);
+    }
+
     setLastCity(value);
-  }, [setLastCity]);
+  }, [setLastCity, inputError]);
 
   return (
     <form
@@ -34,7 +45,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
       onSubmit={onFormSubmit}
     >
       <input
-        className={styles.weather__input}
+        className={classNames(styles.weather__input, inputError && styles['weather__input--error'])}
         type="text"
         value={lastCity}
         onChange={onCityInputChange}

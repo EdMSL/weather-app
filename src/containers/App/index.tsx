@@ -13,35 +13,27 @@ import classNames from 'classnames';
 import { history, IAppState } from '$redux/store';
 import { PathName } from '$constants/paths';
 import { CurrentWeather } from '$components/CurrentWeather';
-import { FiveDayForecast } from '$components/FiveDayForecast';
+import { FiveDayForecast } from '$components/FiveDaysForecast';
 
 const styles = require('./styles.module.scss');
 
 interface IStateProps {
   currentWeather: IAppState['content']['currentWeather'],
-  pathname: string,
 }
 
 const mapStateToProps = ({
   content: { currentWeather },
-  router: { location: { pathname } },
 }: IAppState): IStateProps => ({
   currentWeather,
-  pathname,
 });
 
 export type IAppProps = ReturnType<typeof mapStateToProps>;
 
 const UnconnectedApp: React.FunctionComponent<IAppProps> = ({
   currentWeather,
-  pathname,
 }) => (
   <ConnectedRouter history={history}>
-    <main className={classNames(
-      styles.main,
-      pathname === PathName.CURRENT_WEATHER && styles[`main--${currentWeather.weather.main.toLowerCase()}`],
-    )}
-    >
+    <main>
       <div className="main-wrapper">
         <h1 className={styles.main__title}>Weather App</h1>
         <section className={styles.router}>
