@@ -73,7 +73,7 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
               </p>
               <div className="levitation-animation">
                 <img
-                  src={`http://openweathermap.org/img/wn/${currentWeather.weather.icon}@2x.png`}
+                  src={`https://openweathermap.org/img/wn/${currentWeather.weather.icon}@2x.png`}
                   alt="current weather"
                   title={currentWeather.weather.description}
                 />

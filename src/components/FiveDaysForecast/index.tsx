@@ -91,7 +91,7 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
                           {toStringWithFirstUppercaseLetter(currentForecast.weather.description)}
                         </p>
                         <img
-                          src={`http://openweathermap.org/img/wn/${currentForecast.weather.icon}@2x.png`} // eslint-disable-line max-len
+                          src={`https://openweathermap.org/img/wn/${currentForecast.weather.icon}@2x.png`} // eslint-disable-line max-len
                           alt="current weather"
                           title={currentForecast.weather.description}
                         />

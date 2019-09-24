@@ -103,7 +103,7 @@ export const ApiErrorStatusCode = {
 };
 
 export const ApiOpenWeatherRequestUrl = {
-  BASE: 'http://api.openweathermap.org/data/2.5/',
+  BASE: 'https://api.openweathermap.org/data/2.5/',
   GET_CURRENT_WEATHER: `weather?${REQUEST_PARAMETERS}&q=`,
   GET_5_DAYS_FORECAST: `forecast?${REQUEST_PARAMETERS}&q=`,
 };
