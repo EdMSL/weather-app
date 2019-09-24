@@ -16,7 +16,7 @@ module.exports = function (assetsDir) {
     return new HtmlWebpackPlugin({
       filename: `${name}.html`,
       template: `${assetsDir}/${name}.${ext}`,
-      title: 'New React App',
+      title: 'Weather app',
       inject: process.env.NODE_ENV === 'development',
     });
   }).filter(Boolean);
