@@ -18,11 +18,18 @@
   }
 
   &--error {
-    border-color: rgb(218, 0, 0);
+    border-color: $error-color;
 
     &:hover,
     &:focus {
-      box-shadow: 0 0 0 1px rgb(218, 0, 0);
+      box-shadow: 0 0 0 1px $error-color;
     }
   }
+}
+
+.weather__error {
+  @include reset-indents;
+  margin-bottom: 5px;
+
+  color: $error-color;
 }

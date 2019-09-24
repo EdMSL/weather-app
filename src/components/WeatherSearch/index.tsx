@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import classNames from 'classnames';
 
+import { ApiErrorStatusCode } from '$api/constants';
 import { Button } from '$components/UI/Button';
 import * as CONTENT_ACTIONS from '$modules/content/actions';
 import { IContentRootState } from '$modules/content/reducer';
@@ -30,7 +31,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
   }, [getWeather, inputError]);
 
   const onCityInputChange = useCallback(({ target: { value } }) => {
-    if (/[^a-z]+/i.test(value)) {
+    if (/[^a-z-\s]/i.test(value)) {
       setInputError(true);
     } else if (inputError) {
       setInputError(false);
@@ -51,8 +52,24 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
         onChange={onCityInputChange}
       />
       {
-        requestError.status > 0 && (
-          <span>{`City ${requestError.statusText}`}</span>
+        inputError && (
+          <p className={styles.weather__error}>
+            Only latin letters, - and space simbols!
+          </p>
+        )
+      }
+      {
+        requestError.status === ApiErrorStatusCode.NOT_FOUND && (
+          <p className={styles.weather__error}>
+            {`City ${requestError.statusText.toLowerCase()}`}
+          </p>
+        )
+      }
+      {
+        requestError.status > 0 && requestError.status !== ApiErrorStatusCode.NOT_FOUND && (
+          <p className={styles.weather__error}>
+            Something wrong. Please, try again.
+          </p>
         )
       }
       <Button isSubmit>
