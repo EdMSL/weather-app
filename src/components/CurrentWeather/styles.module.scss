@@ -1,9 +1,20 @@
 .weather__card {
-  width: 300px;
+  width: 500px;
   margin: 0 auto;
   padding: 10px 20px;
 
-  background-color: $primary-color;
+  font-family: $second-font;
+
+  // background-color: $primary-color;
+  background-image: radial-gradient(
+      ellipse 202% 185% at bottom right,
+      $bg-card-first-color 25%,
+      $bg-card-second-color 50%,
+      $bg-card-third-color 50%,
+      $bg-card-third-color 100%
+    ),
+    linear-gradient(to top, $bg-main-gradient-second-color 0%, $bg-main-gradient-first-color 100%);
+  background-position: top left;
   border-radius: 20px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 }
@@ -32,6 +43,10 @@
   font-size: 35px;
   line-height: 35px;
   font-weight: 700;
+}
+
+.weather__icon {
+  fill: rgb(255, 255, 255);
 }
 
 .weather__description {

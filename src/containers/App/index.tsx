@@ -33,8 +33,8 @@ const UnconnectedApp: React.FunctionComponent<IAppProps> = ({
   currentWeather,
 }) => (
   <ConnectedRouter history={history}>
-    <main>
-      <div className="main-wrapper">
+    <main className={styles.main}>
+      <div className={styles.main__wrapper}>
         <h1 className={styles.main__title}>Weather App</h1>
         <section className={styles.router}>
           <NavLink

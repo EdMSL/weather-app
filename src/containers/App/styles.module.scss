@@ -1,6 +1,19 @@
 .main {
+  background-image: linear-gradient(
+    $bg-main-gradient-second-color 0%,
+    $bg-main-gradient-first-color 100%
+  );
+  background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+}
+
+.main__wrapper {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 20px;
+
+  text-align: center;
 }
 
 .main__title {

@@ -65,7 +65,7 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
               </p>
               <Icon
                 className={styles.weather__flag}
-                icon={generateCountryNameForSprite(currentWeather.country)}
+                icon={`flag-${generateCountryNameForSprite(currentWeather.country)}`}
               />
               <p className={styles.weather__temp}>
                 {Math.round(currentWeather.temp)}
