@@ -72,10 +72,20 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
                 <sup>&#176;</sup>
               </p>
               <div className="levitation-animation">
-                <img
+                {/* <img
                   src={`https://openweathermap.org/img/wn/${currentWeather.weather.icon}@2x.png`}
                   alt="current weather"
                   title={currentWeather.weather.description}
+                /> */}
+                <Icon
+                  className={styles.weather__icon}
+                  icon="sun"
+                  width={100}
+                />
+                <Icon
+                  className={styles.weather__icon}
+                  icon="wi-clear-night"
+                  width={100}
                 />
               </div>
               <p className={styles.weather__description}>
