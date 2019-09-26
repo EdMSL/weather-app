@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { DAYS } from '$constants/date';
 import { WeatherSearch } from '$components/WeatherSearch';
 import { Icon } from '$components/UI/Icon';
 import * as CONTENT_ACTION from '$modules/content/actions';
@@ -17,6 +16,7 @@ import {
   generateCountryNameForSprite,
   generateFullDateStr,
   generateWindSpeedStr,
+  generateWeatherIconNameForSprite,
 } from '$utils/transformData';
 
 const styles = require('./styles.module.scss');
@@ -86,9 +86,16 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
               <p className={styles.weather__wind}>
                 {generateWindSpeedStr(currentWeather.wind.speed)}
               </p>
-              <p className={styles.weather__humidity}>
-                {/* {currentWeather.weather} */}
-              </p>
+              <div className={styles['weather__humidity-block']}>
+                <Icon
+                  className={styles['weather__humidity-icon']}
+                  icon="weather-drop"
+                />
+                <p className={styles.weather__humidity}>
+                  {currentWeather.humidity}
+                  <span className={styles['weather__humidity-simbol']}>%</span>
+                </p>
+              </div>
             </div>
             <p className={styles.weather__temp}>
               {Math.round(currentWeather.temp)}
@@ -102,13 +109,13 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
               /> */}
               <Icon
                 className={styles.weather__icon}
-                icon="sun"
-                width={100}
+                icon={generateWeatherIconNameForSprite(currentWeather.weather)}
+                size={100}
               />
               <Icon
                 className={styles.weather__icon}
-                icon="wi-clear-night"
-                width={100}
+                icon="weather-few-clouds-night"
+                size={100}
               />
             </div>
             <p className={styles.weather__description}>

@@ -27,6 +27,7 @@
 .weather__day,
 .weather__full-date,
 .weather__wind,
+.weather__humidity,
 .weather__temp,
 .weather__description {
   @include reset-indents;
@@ -55,6 +56,20 @@
 
 .weather__day {
   text-transform: uppercase;
+}
+
+.weather__humidity-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather__humidity-icon {
+  fill: $text-secondary-color;
+}
+
+.weather__humidity-simbol {
+  font-size: 10px;
 }
 
 .weather__temp {

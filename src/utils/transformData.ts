@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 import { CountryCode } from '$constants/countrysCodes';
+import { WeatherCode, DAY_NIGHT_CODES } from '$constants/weatherCodes';
 import {
   ICurrentWeatherRequestData,
   IFiveDaysForecastRequestData,
@@ -63,6 +64,26 @@ export const generateCountryNameForSprite = (countryCode: string): string => {
   }
 
   return 'unknown';
+};
+
+export const isNight = (iconName: string): boolean => iconName[iconName.length - 1] === 'n';
+
+export const generateWeatherIconNameForSprite = (
+  weatherData: ICurrentWeather['weather'],
+): string => {
+  if (WeatherCode[weatherData.id.toString()]) {
+    if (DAY_NIGHT_CODES.includes(weatherData.id)) {
+      if (isNight(weatherData.icon)) {
+        return `weather-${WeatherCode[weatherData.id.toString()]}-night`;
+      }
+
+      return `weather-${WeatherCode[weatherData.id.toString()]}-day`;
+    }
+
+    return `weather-${WeatherCode[weatherData.id.toString()]}`;
+  }
+
+  return 'weather-not-available';
 };
 
 export const generateDayMonthStr = (date?: string): string => {
