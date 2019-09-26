@@ -13,6 +13,7 @@ module.exports = {
       files: '*.{css,sass,scss}',
       options: {
         singleQuote: false,
+        printWidth: 80,
       }
     },
   ],

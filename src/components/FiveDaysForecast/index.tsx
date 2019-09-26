@@ -11,8 +11,8 @@ import {
   IRequestError,
 } from '$modules/content/reducer';
 import { IAppState } from '$redux/store';
-import { generateCountryNameForSprite, toStringWithFirstUppercaseLetter } from '$utils/strings';
-import { generateDateTxt } from '$utils/transformData';
+import { toStringWithFirstUppercaseLetter } from '$utils/strings';
+import { generateDayMonthStr, generateCountryNameForSprite } from '$utils/transformData';
 
 const styles = require('./styles.module.scss');
 
@@ -78,7 +78,7 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
                         className={styles.weather__card}
                       >
                         <p className={styles.weather__date}>
-                          {generateDateTxt(currentForecast.dateTxt)}
+                          {generateDayMonthStr(currentForecast.dateTxt)}
                         </p>
                         <p className={styles.weather__time}>
                           {`${new Date(currentForecast.dateTxt).getHours()}:00`}

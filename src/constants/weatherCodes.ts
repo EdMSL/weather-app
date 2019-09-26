@@ -1,4 +1,4 @@
-export const WeatherType = {
+export const WeatherCode = {
   200: 'thunderstorm-with-light-rain',
   201: 'thunderstorm-with-rain',
   202: 'thunderstorm-with-heavy-rain',

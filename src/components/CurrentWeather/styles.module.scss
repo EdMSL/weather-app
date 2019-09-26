@@ -4,8 +4,8 @@
   padding: 10px 20px;
 
   font-family: $second-font;
+  color: $text-secondary-color;
 
-  // background-color: $primary-color;
   background-image: radial-gradient(
       ellipse 202% 185% at bottom right,
       $bg-card-first-color 25%,
@@ -13,28 +13,48 @@
       $bg-card-third-color 50%,
       $bg-card-third-color 100%
     ),
-    linear-gradient(to top, $bg-main-gradient-second-color 0%, $bg-main-gradient-first-color 100%);
+    linear-gradient(
+      to top,
+      $bg-main-gradient-second-color 0%,
+      $bg-main-gradient-first-color 100%
+    );
   background-position: top left;
   border-radius: 20px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
 .weather__city,
+.weather__day,
+.weather__full-date,
+.weather__wind,
 .weather__temp,
 .weather__description {
   @include reset-indents;
 }
 
-.weather__city {
-  margin-bottom: 10px;
+.weather__place {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-  font-size: 16px;
-  line-height: 22px;
+.weather__city {
+  font-size: 32px;
+  line-height: 40px;
   font-weight: 700;
+  text-align: left;
 }
 
 .weather__flag {
-  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.weather__info {
+  width: 200px;
+}
+
+.weather__day {
+  text-transform: uppercase;
 }
 
 .weather__temp {

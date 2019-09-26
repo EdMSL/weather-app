@@ -1,4 +1,4 @@
-export const CountryName = {
+export const CountryCode = {
   AD: 'Andorra',
   AE: 'United Arab Emirates',
   AF: 'Afghanistan',

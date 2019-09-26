@@ -24,6 +24,8 @@ export interface ICurrentWeather {
   cityId: number,
   clouds: number,
   country: string,
+  humidity: number,
+  pressure: number,
   temp: number,
   weather: IWeather,
   wind: IWind,
