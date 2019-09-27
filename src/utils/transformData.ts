@@ -6,18 +6,26 @@ import {
   ICurrentWeatherRequestData,
   IFiveDaysForecastRequestData,
   IResponseFiveDaysForecastListItem,
+  IResponseGetCitiesListItem,
 } from '$api/constants';
 import {
   IRequestError,
   ICurrentWeather,
   IFiveDaysForecastListItem,
   IFiveDaysForecast,
+  ICity,
 } from '$modules/content/reducer';
 import { DAYS, MONTHS } from '$constants/date';
 
 export const generateRequestErrorObject = (data: AxiosResponse): IRequestError => ({
   status: data.status,
   statusText: data.statusText,
+});
+
+export const generateCityObject = (cityData: IResponseGetCitiesListItem): ICity => ({
+  country: cityData.sys.country,
+  id: cityData.id,
+  name: cityData.name,
 });
 
 export const generateCurrentWeatherObject = (

@@ -4,13 +4,27 @@
   align-items: center;
 }
 
+.weather__input-block {
+  position: relative;
+}
+
 .weather__input {
+  position: relative;
+
   width: 300px;
   margin-bottom: 10px;
-  padding: 5px;
+  padding: 10px;
+
+  color: $primary-color;
 
   border: 1px solid $primary-color;
   outline: none;
+
+  &::placeholder {
+    color: $primary-color;
+
+    opacity: 0.65;
+  }
 
   &:hover,
   &:focus {
@@ -27,9 +41,34 @@
   }
 }
 
+.weather__cities-list {
+  @include reset-indents;
+  position: absolute;
+  top: 38px;
+  z-index: 5;
+
+  width: 100%;
+
+  list-style: none;
+
+  background-color: $cities-list-bg-color;
+}
+
+.weather__cities-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.weather__cities-name {
+  @include reset-indents;
+  margin-right: 10px;
+}
+
 .weather__error {
   @include reset-indents;
   margin-bottom: 5px;
 
   color: $error-color;
+  font-weight: 700;
 }

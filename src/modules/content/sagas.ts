@@ -1,6 +1,10 @@
 import { SagaIterator } from 'redux-saga';
 import {
-  select, call, put, takeLatest,
+  select,
+  call,
+  put,
+  takeLatest,
+  delay,
 } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
 
@@ -8,19 +12,45 @@ import {
   ApiErrorStatusCode,
   ICurrentWeatherRequestData,
   IFiveDaysForecastRequestData,
+  IFiendCitiesRequestData,
 } from '$api/constants';
-import { apiGetCurrentWeather, apiGetFiveDaysForecast } from '$api/content';
-import { DEFAULT_REQUEST_ERROR } from '$constants/defaultParameters';
+import {
+  apiGetCities,
+  apiGetCurrentWeather,
+  apiGetFiveDaysForecast,
+} from '$api/content';
+import { DEFAULT_REQUEST_ERROR, DEFAULT_EMPTY_CITY } from '$constants/defaultParameters';
 import * as CONTENT_ACTIONS from '$modules/content/actions';
 import { CONTENT_TYPES } from '$modules/content/types';
 import {
   generateRequestErrorObject,
   generateCurrentWeatherObject,
   generateFiveDaysForecastObject,
+  generateCityObject,
 } from '$utils/transformData';
 import { IAppState } from '$redux/store';
 
+const REQUEST_DELAY_TIME = 1000;
+
 const getState = (state: IAppState): IAppState => state;
+
+function* getCitiesSaga(): SagaIterator {
+  const { content: { lastCity } }: IAppState = yield select(getState);
+
+  yield delay(REQUEST_DELAY_TIME);
+
+  const citiesData: AxiosResponse<IFiendCitiesRequestData> = yield call(apiGetCities, { city: lastCity });
+
+  if (citiesData.data.list) {
+    const newCities = citiesData.data.list.map(
+      (currentCityData) => generateCityObject(currentCityData),
+    );
+
+    yield put(CONTENT_ACTIONS.setCities(newCities));
+  } else {
+    yield put(CONTENT_ACTIONS.setCities([DEFAULT_EMPTY_CITY]));
+  }
+}
 
 function* getWeatherDataSaga(type: string): SagaIterator {
   const { content: { lastCity, requestError } }: IAppState = yield select(getState);
@@ -45,6 +75,7 @@ function* setWeatherSaga(weatherData: AxiosResponse, type: string): SagaIterator
     } else if (type === CONTENT_TYPES.GET_FIVE_DAYS_FORECAST) {
       yield put(CONTENT_ACTIONS.setFiveDaysForecast(generateFiveDaysForecastObject(weatherData.data)));
     }
+    yield put(CONTENT_ACTIONS.setCities([]));
   } else {
     yield put(CONTENT_ACTIONS.setRequestError(generateRequestErrorObject(weatherData)));
   }
@@ -67,6 +98,7 @@ function* getFiveDaysForecastSaga(
 }
 
 export default function* contentSaga(): SagaIterator {
+  yield takeLatest(CONTENT_TYPES.GET_CITIES, getCitiesSaga);
   yield takeLatest(CONTENT_TYPES.GET_CURRENT_WEATHER, getCurrentWeatherSaga);
   yield takeLatest(CONTENT_TYPES.GET_FIVE_DAYS_FORECAST, getFiveDaysForecastSaga);
 }

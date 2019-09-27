@@ -1,3 +1,5 @@
+import { string } from 'prop-types';
+
 interface IResponseClouds {
   all: number,
 }
@@ -7,7 +9,7 @@ interface IResponseCoord {
   lon: number,
 }
 
-interface IResponseMainCurrentWeather {
+interface IResponseMain {
   humidity: number,
   pressure: number,
   temp: number,
@@ -15,7 +17,27 @@ interface IResponseMainCurrentWeather {
   temp_max: number,
 }
 
-interface IResponseMainFiveDaysForecast extends IResponseMainCurrentWeather {
+export interface IResponseGetCitiesListItem {
+    id: number,
+    name: string,
+    coord: IResponseCoord,
+    main: IResponseMain,
+    dt: number,
+    sys: {
+      country: string,
+    },
+    rain?: {
+      '1h': number,
+    },
+    snow?: {
+      '1h': number,
+    },
+    clouds: IResponseClouds,
+    weather: IResponseWeather[],
+    wind: IResponseWind,
+}
+
+interface IResponseMainFiveDaysForecast extends IResponseMain {
   grnd_level: number,
   sea_level: number,
   temp_kf: number,
@@ -51,15 +73,22 @@ interface IResponseWind {
   speed: number,
 }
 
+export interface IFiendCitiesRequestData {
+  cod: string,
+  count: number,
+  list: IResponseGetCitiesListItem[],
+  message: number,
+}
+
 export interface ICurrentWeatherRequestData {
-  coord: IResponseCoord,
-  weather: IResponseWeather[],
   base: string,
-  main: IResponseMainCurrentWeather,
-  visibility: number,
-  wind: IResponseWind,
   clouds: IResponseClouds,
+  cod: number,
+  coord: IResponseCoord,
   dt: number,
+  id: number,
+  main: IResponseMain,
+  name: string,
   sys: {
     type: number,
     id: number,
@@ -69,9 +98,9 @@ export interface ICurrentWeatherRequestData {
     sunset: number,
   },
   timezone: number,
-  id: number,
-  name: string,
-  cod: number,
+  visibility: number,
+  weather: IResponseWeather[],
+  wind: IResponseWind,
 }
 
 export interface IFiveDaysForecastRequestData {
@@ -85,10 +114,10 @@ export interface IFiveDaysForecastRequestData {
     sunrise?: number,
     sunset?: number,
   },
-  cod: string,
-  message: number,
   cnt: number,
+  cod: string,
   list: IResponseFiveDaysForecastListItem[],
+  message: number,
 }
 
 const API_KEY = '09864f104fd238ceb72091abd292903c';
@@ -104,6 +133,7 @@ export const ApiErrorStatusCode = {
 
 export const ApiOpenWeatherRequestUrl = {
   BASE: 'https://api.openweathermap.org/data/2.5/',
+  FIND_CITIES: `find?${REQUEST_PARAMETERS}&q=`,
   GET_CURRENT_WEATHER: `weather?${REQUEST_PARAMETERS}&q=`,
   GET_5_DAYS_FORECAST: `forecast?${REQUEST_PARAMETERS}&q=`,
 };

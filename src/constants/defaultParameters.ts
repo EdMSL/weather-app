@@ -1,4 +1,9 @@
-import { ICurrentWeather, IRequestError, IFiveDaysForecast } from '$modules/content/reducer';
+import {
+  ICurrentWeather,
+  IRequestError,
+  IFiveDaysForecast,
+  ICity,
+} from '$modules/content/reducer';
 
 export const DEFAULT_CURRENT_WEATHER: ICurrentWeather = {
   city: '',
@@ -30,4 +35,10 @@ export const DEFAULT_FIVE_DAYS_FORECAST: IFiveDaysForecast = {
 export const DEFAULT_REQUEST_ERROR: IRequestError = {
   status: 0,
   statusText: '',
+};
+
+export const DEFAULT_EMPTY_CITY: ICity = {
+  country: '',
+  id: null,
+  name: '',
 };

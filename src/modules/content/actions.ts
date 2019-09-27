@@ -11,6 +11,10 @@ interface IActionReturnType<T> {
   payload?: T,
 }
 
+export const getCities = (): IActionReturnType<{}> => ({
+  type: CONTENT_TYPES.GET_CITIES,
+});
+
 export const getCurrentWeather = (): IActionReturnType<{}> => ({
   type: CONTENT_TYPES.GET_CURRENT_WEATHER,
 });
@@ -24,6 +28,13 @@ export const setCurrentWeather = (
 ): IActionReturnType<typeof currentWeather> => ({
   type: CONTENT_TYPES.SET_CURRENT_WEATHER,
   payload: currentWeather,
+});
+
+export const setCities = (
+  cities: IContentRootState['cities'],
+): IActionReturnType<typeof cities> => ({
+  type: CONTENT_TYPES.SET_CITIES,
+  payload: cities,
 });
 
 export const setFiveDaysForecast = (

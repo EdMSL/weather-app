@@ -19,6 +19,12 @@ interface IWind {
   speed: number,
 }
 
+export interface ICity {
+  id: number,
+  country: string,
+  name: string,
+}
+
 export interface ICurrentWeather {
   city: string,
   cityId: number,
@@ -53,6 +59,7 @@ export interface IRequestError {
 }
 
 export type IContentRootState = Readonly<{
+  cities: ICity[],
   currentWeather: ICurrentWeather,
   fiveDaysForecast: IFiveDaysForecast,
   lastCity: string,
@@ -66,6 +73,14 @@ type UnsafeReturnType<T> = T extends (...args: any[]) => infer R ? R : any;
 interface IActionHandler<T> {
   (state: IContentRootState, payload: UnsafeReturnType<T>): IContentRootState,
 }
+
+const setCities: IActionHandler<typeof CONTENT_ACTIONS.setCities> = (
+  state,
+  { payload: cities },
+) => ({
+  ...state,
+  cities,
+});
 
 const setCurrentWeather: IActionHandler<typeof CONTENT_ACTIONS.setCurrentWeather> = (
   state,
@@ -100,6 +115,7 @@ const setRequestError: IActionHandler<typeof CONTENT_ACTIONS.setRequestError> = 
 });
 
 const HANDLERS = {
+  [CONTENT_TYPES.SET_CITIES]: setCities,
   [CONTENT_TYPES.SET_CURRENT_WEATHER]: setCurrentWeather,
   [CONTENT_TYPES.SET_FIVE_DAYS_FORECAST]: setFiveDaysForecast,
   [CONTENT_TYPES.SET_LAST_CITY]: setLastCity,
@@ -107,6 +123,7 @@ const HANDLERS = {
 };
 
 const INITIAL_STATE: IContentRootState = {
+  cities: [],
   currentWeather: DEFAULT_CURRENT_WEATHER,
   fiveDaysForecast: DEFAULT_FIVE_DAYS_FORECAST,
   lastCity: '',

@@ -17,6 +17,7 @@ import { generateDayMonthStr, generateCountryNameForSprite } from '$utils/transf
 const styles = require('./styles.module.scss');
 
 interface IStateProps {
+  cities: IContentRootState['cities'],
   fiveDaysForecast: IFiveDaysForecast,
   lastCity: IContentRootState['lastCity'],
   requestError: IRequestError,
@@ -24,36 +25,46 @@ interface IStateProps {
 
 const mapStateToProps = ({
   content: {
+    cities,
     fiveDaysForecast,
     lastCity,
     requestError,
   },
 }: IAppState): IStateProps => ({
+  cities,
   fiveDaysForecast,
   lastCity,
   requestError,
 });
 
 const mapDispatchToProps = {
+  getCities: CONTENT_ACTION.getCities,
   getFiveDaysForecast: CONTENT_ACTION.getFiveDaysForecast,
   setLastCity: CONTENT_ACTION.setLastCity,
+  setCities: CONTENT_ACTION.setCities,
 };
 
 export type IProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
 const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
+  cities,
   fiveDaysForecast,
   lastCity,
   requestError,
+  getCities,
   getFiveDaysForecast,
   setLastCity,
+  setCities,
 }) => (
   <React.Fragment>
     <WeatherSearch
+      cities={cities}
       lastCity={lastCity}
       requestError={requestError}
+      getCities={getCities}
       getWeather={getFiveDaysForecast}
       setLastCity={setLastCity}
+      setCities={setCities}
     />
     <div className={styles.weather__view}>
       <h2 className={styles.weather__title}>

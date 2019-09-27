@@ -23,6 +23,7 @@ import {
 const styles = require('./styles.module.scss');
 
 interface IStateProps {
+  cities: IContentRootState['cities'],
   currentWeather: ICurrentWeather,
   lastCity: IContentRootState['lastCity'],
   requestError: IRequestError,
@@ -30,36 +31,46 @@ interface IStateProps {
 
 const mapStateToProps = ({
   content: {
+    cities,
     currentWeather,
     lastCity,
     requestError,
   },
 }: IAppState): IStateProps => ({
+  cities,
   currentWeather,
   lastCity,
   requestError,
 });
 
 const mapDispatchToProps = {
+  getCities: CONTENT_ACTION.getCities,
   getCurrentWeather: CONTENT_ACTION.getCurrentWeather,
   setLastCity: CONTENT_ACTION.setLastCity,
+  setCities: CONTENT_ACTION.setCities,
 };
 
 export type IProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
 const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
+  cities,
   currentWeather,
   lastCity,
   requestError,
+  getCities,
   getCurrentWeather,
   setLastCity,
+  setCities,
 }) => (
   <React.Fragment>
     <WeatherSearch
+      cities={cities}
       lastCity={lastCity}
       requestError={requestError}
+      getCities={getCities}
       getWeather={getCurrentWeather}
       setLastCity={setLastCity}
+      setCities={setCities}
     />
     <div className={styles.weather__view}>
       <h2 className={styles.weather__title}>

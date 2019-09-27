@@ -9,7 +9,7 @@
   padding: 10px 20px;
 
   font-family: $second-font;
-  color: $text-secondary-color;
+  color: $text-main-color;
 
   background-image: radial-gradient(
       ellipse 202% 185% at bottom right,
@@ -81,7 +81,7 @@
 }
 
 .weather__humidity-icon {
-  fill: $text-secondary-color;
+  fill: $text-main-color;
 }
 
 .weather__humidity-simbol {
