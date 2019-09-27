@@ -30,23 +30,29 @@ import {
 } from '$utils/transformData';
 import { IAppState } from '$redux/store';
 
-const REQUEST_DELAY_TIME = 1000;
+const REQUEST_DELAY_TIME = 500;
 
 const getState = (state: IAppState): IAppState => state;
 
 function* getCitiesSaga(): SagaIterator {
+  yield delay(REQUEST_DELAY_TIME);
+
   const { content: { lastCity } }: IAppState = yield select(getState);
 
-  yield delay(REQUEST_DELAY_TIME);
+  if (!lastCity) return;
 
   const citiesData: AxiosResponse<IFiendCitiesRequestData> = yield call(apiGetCities, { city: lastCity });
 
   if (citiesData.data.list) {
-    const newCities = citiesData.data.list.map(
-      (currentCityData) => generateCityObject(currentCityData),
-    );
+    if (citiesData.data.list.length > 0) {
+      const newCities = citiesData.data.list.map(
+        (currentCityData) => generateCityObject(currentCityData),
+      );
 
-    yield put(CONTENT_ACTIONS.setCities(newCities));
+      yield put(CONTENT_ACTIONS.setCities(newCities));
+    } else {
+      yield put(CONTENT_ACTIONS.setCities([DEFAULT_EMPTY_CITY]));
+    }
   } else {
     yield put(CONTENT_ACTIONS.setCities([DEFAULT_EMPTY_CITY]));
   }

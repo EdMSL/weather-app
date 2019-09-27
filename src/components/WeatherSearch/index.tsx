@@ -40,6 +40,10 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
   }, [getWeather, inputError, lastCity]);
 
   const onCityInputChange = useCallback(({ target: { value } }) => {
+    if (cities.length > 0) {
+      setCities([]);
+    }
+
     if (/[^a-z-\s]/i.test(value)) {
       setInputError(true);
     } else if (inputError) {
@@ -47,8 +51,11 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
     }
 
     setLastCity(value);
-    getCities();
-  }, [setLastCity, inputError, getCities]);
+
+    if (value) {
+      getCities();
+    }
+  }, [cities, setLastCity, inputError, getCities, setCities]);
 
   return (
     <form
