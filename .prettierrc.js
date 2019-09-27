@@ -1,7 +1,6 @@
 module.exports = {
   printWidth: 100,
   semi: true,
-  // endOfLine: 'lf',
   singleQuote: true,
   arrowParens: 'always',
   jsxSingleQuote: false,

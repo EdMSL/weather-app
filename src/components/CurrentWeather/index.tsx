@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import { WeatherSearch } from '$components/WeatherSearch';
 import { Icon } from '$components/UI/Icon';
@@ -84,7 +85,7 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
                 {generateFullDateStr()}
               </p>
               <p className={styles.weather__wind}>
-                {generateWindSpeedStr(currentWeather.wind.speed)}
+                {`Wind ${generateWindSpeedStr(currentWeather.wind.speed)}`}
               </p>
               <div className={styles['weather__humidity-block']}>
                 <Icon
@@ -97,26 +98,16 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
                 </p>
               </div>
             </div>
-            <p className={styles.weather__temp}>
-              {Math.round(currentWeather.temp)}
-              <sup>&#176;</sup>
-            </p>
-            <div className="levitation-animation">
-              {/* <img
-                src={`https://openweathermap.org/img/wn/${currentWeather.weather.icon}@2x.png`}
-                alt="current weather"
-                title={currentWeather.weather.description}
-              /> */}
+            <div className={styles['weather__temp-block']}>
               <Icon
-                className={styles.weather__icon}
+                className={classNames(styles.weather__icon, 'levitation-animation')}
                 icon={generateWeatherIconNameForSprite(currentWeather.weather)}
-                size={100}
+                size={120}
               />
-              <Icon
-                className={styles.weather__icon}
-                icon="weather-few-clouds-night"
-                size={100}
-              />
+              <p className={styles.weather__temp}>
+                {Math.round(currentWeather.temp)}
+                <sup>&#176;</sup>
+              </p>
             </div>
             <p className={styles.weather__description}>
               {toStringWithFirstUppercaseLetter(currentWeather.weather.description)}

@@ -1,5 +1,10 @@
 .weather__card {
-  width: 500px;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 400px;
   margin: 0 auto;
   padding: 10px 20px;
 
@@ -20,7 +25,7 @@
     );
   background-position: top left;
   border-radius: 20px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .weather__city,
@@ -40,9 +45,8 @@
 }
 
 .weather__city {
-  font-size: 32px;
-  line-height: 40px;
-  font-weight: 700;
+  font-size: 45px;
+  line-height: 55px;
   text-align: left;
 }
 
@@ -51,17 +55,29 @@
 }
 
 .weather__info {
-  width: 200px;
+  margin-bottom: 20px;
 }
 
 .weather__day {
+  font-size: 25px;
+  line-height: 35px;
   text-transform: uppercase;
+}
+
+.weather__full-date {
+  line-height: 24px;
+}
+
+.weather__wind {
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .weather__humidity-block {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  margin-top: 5px;
 }
 
 .weather__humidity-icon {
@@ -72,12 +88,19 @@
   font-size: 10px;
 }
 
-.weather__temp {
-  margin-bottom: 5px;
+.weather__temp-block {
+  position: absolute;
+  top: 30%;
+  right: 15px;
 
-  font-size: 35px;
-  line-height: 35px;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.weather__temp {
+  font-size: 90px;
+  line-height: 90px;
+  font-weight: 400;
 }
 
 .weather__icon {
@@ -85,5 +108,9 @@
 }
 
 .weather__description {
-  font-weight: 700;
+  align-self: center;
+
+  font-size: 25px;
+  line-height: 35px;
+  text-transform: uppercase;
 }
