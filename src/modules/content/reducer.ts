@@ -2,7 +2,7 @@ import { createReducer } from 'reduxsauce';
 
 import {
   DEFAULT_REQUEST_ERROR,
-  DEFAULT_CURRENT_WEATHER, DEFAULT_FIVE_DAYS_FORECAST,
+  DEFAULT_CURRENT_WEATHER, DEFAULT_FIVE_DAYS_FORECAST, DEFAULT_EMPTY_CITY,
 } from '$constants/defaultParameters';
 import { CONTENT_TYPES } from '$modules/content/types';
 import * as CONTENT_ACTIONS from '$modules/content/actions';
@@ -62,7 +62,7 @@ export type IContentRootState = Readonly<{
   cities: ICity[],
   currentWeather: ICurrentWeather,
   fiveDaysForecast: IFiveDaysForecast,
-  lastCity: string,
+  lastCity: ICity,
   requestError: IRequestError,
 }>;
 
@@ -126,7 +126,7 @@ const INITIAL_STATE: IContentRootState = {
   cities: [],
   currentWeather: DEFAULT_CURRENT_WEATHER,
   fiveDaysForecast: DEFAULT_FIVE_DAYS_FORECAST,
-  lastCity: '',
+  lastCity: DEFAULT_EMPTY_CITY,
   requestError: DEFAULT_REQUEST_ERROR,
 };
 

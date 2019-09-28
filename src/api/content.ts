@@ -5,7 +5,7 @@ import {
   ApiOpenWeatherRequestUrl,
   ICurrentWeatherRequestData,
   IFiveDaysForecastRequestData,
-  IFiendCitiesRequestData,
+  IGetCitiesRequestData,
 } from '$api/constants';
 
 interface IGetCities {
@@ -22,7 +22,7 @@ const onError = ({ response }: AxiosError): AxiosResponse => response;
 
 export const apiGetCities = (
   data: IGetCities,
-): AxiosPromise<IFiendCitiesRequestData> => (
+): AxiosPromise<IGetCitiesRequestData> => (
   client({
     method: 'GET',
     url: `${ApiOpenWeatherRequestUrl.FIND_CITIES}${data.city}`,

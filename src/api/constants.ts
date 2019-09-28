@@ -1,5 +1,3 @@
-import { string } from 'prop-types';
-
 interface IResponseClouds {
   all: number,
 }
@@ -73,7 +71,7 @@ interface IResponseWind {
   speed: number,
 }
 
-export interface IFiendCitiesRequestData {
+export interface IGetCitiesRequestData {
   cod: string,
   count: number,
   list: IResponseGetCitiesListItem[],

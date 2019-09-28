@@ -46,7 +46,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   getCities: CONTENT_ACTION.getCities,
   getCurrentWeather: CONTENT_ACTION.getCurrentWeather,
-  setLastCity: CONTENT_ACTION.setLastCity,
   setCities: CONTENT_ACTION.setCities,
 };
 
@@ -59,7 +58,6 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
   requestError,
   getCities,
   getCurrentWeather,
-  setLastCity,
   setCities,
 }) => (
   <React.Fragment>
@@ -69,7 +67,6 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
       requestError={requestError}
       getCities={getCities}
       getWeather={getCurrentWeather}
-      setLastCity={setLastCity}
       setCities={setCities}
     />
     <div className={styles.weather__view}>
@@ -113,7 +110,7 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
               <Icon
                 className={classNames(styles.weather__icon, 'levitation-animation')}
                 icon={generateWeatherIconNameForSprite(currentWeather.weather)}
-                size={120}
+                size={100}
               />
               <p className={styles.weather__temp}>
                 {Math.round(currentWeather.temp)}

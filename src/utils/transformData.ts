@@ -28,6 +28,18 @@ export const generateCityObject = (cityData: IResponseGetCitiesListItem): ICity 
   name: cityData.name,
 });
 
+export const generateLastCityObjectFromCurrentWeatherData = (cityData: ICurrentWeatherRequestData): ICity => ({
+  country: cityData.sys.country,
+  id: cityData.id,
+  name: cityData.name,
+});
+
+export const generateLastCityObjectFromFiveDaysForecastData = (cityData: IFiveDaysForecastRequestData): ICity => ({
+  country: cityData.city.country,
+  id: cityData.city.id,
+  name: cityData.city.name,
+});
+
 export const generateCurrentWeatherObject = (
   data: ICurrentWeatherRequestData,
 ): ICurrentWeather => ({

@@ -11,23 +11,19 @@ interface IActionReturnType<T> {
   payload?: T,
 }
 
-export const getCities = (): IActionReturnType<{}> => ({
+export const getCities = (cityName: string): IActionReturnType<string> => ({
   type: CONTENT_TYPES.GET_CITIES,
+  payload: cityName,
 });
 
-export const getCurrentWeather = (): IActionReturnType<{}> => ({
+export const getCurrentWeather = (cityName: string): IActionReturnType<string> => ({
   type: CONTENT_TYPES.GET_CURRENT_WEATHER,
+  payload: cityName,
 });
 
-export const getFiveDaysForecast = (): IActionReturnType<{}> => ({
+export const getFiveDaysForecast = (cityName: string): IActionReturnType<string> => ({
   type: CONTENT_TYPES.GET_FIVE_DAYS_FORECAST,
-});
-
-export const setCurrentWeather = (
-  currentWeather: ICurrentWeather,
-): IActionReturnType<typeof currentWeather> => ({
-  type: CONTENT_TYPES.SET_CURRENT_WEATHER,
-  payload: currentWeather,
+  payload: cityName,
 });
 
 export const setCities = (
@@ -35,6 +31,13 @@ export const setCities = (
 ): IActionReturnType<typeof cities> => ({
   type: CONTENT_TYPES.SET_CITIES,
   payload: cities,
+});
+
+export const setCurrentWeather = (
+  currentWeather: ICurrentWeather,
+): IActionReturnType<typeof currentWeather> => ({
+  type: CONTENT_TYPES.SET_CURRENT_WEATHER,
+  payload: currentWeather,
 });
 
 export const setFiveDaysForecast = (

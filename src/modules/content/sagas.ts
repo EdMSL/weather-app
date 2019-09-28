@@ -12,7 +12,7 @@ import {
   ApiErrorStatusCode,
   ICurrentWeatherRequestData,
   IFiveDaysForecastRequestData,
-  IFiendCitiesRequestData,
+  IGetCitiesRequestData,
 } from '$api/constants';
 import {
   apiGetCities,
@@ -27,6 +27,8 @@ import {
   generateCurrentWeatherObject,
   generateFiveDaysForecastObject,
   generateCityObject,
+  generateLastCityObjectFromCurrentWeatherData,
+  generateLastCityObjectFromFiveDaysForecastData,
 } from '$utils/transformData';
 import { IAppState } from '$redux/store';
 
@@ -34,14 +36,12 @@ const REQUEST_DELAY_TIME = 500;
 
 const getState = (state: IAppState): IAppState => state;
 
-function* getCitiesSaga(): SagaIterator {
+function* getCitiesSaga(
+  { payload: cityName }: ReturnType<typeof CONTENT_ACTIONS.getCities>,
+): SagaIterator {
   yield delay(REQUEST_DELAY_TIME);
 
-  const { content: { lastCity } }: IAppState = yield select(getState);
-
-  if (!lastCity) return;
-
-  const citiesData: AxiosResponse<IFiendCitiesRequestData> = yield call(apiGetCities, { city: lastCity });
+  const citiesData: AxiosResponse<IGetCitiesRequestData> = yield call(apiGetCities, { city: cityName });
 
   if (citiesData.data.list) {
     if (citiesData.data.list.length > 0) {
@@ -58,28 +58,34 @@ function* getCitiesSaga(): SagaIterator {
   }
 }
 
-function* getWeatherDataSaga(type: string): SagaIterator {
-  const { content: { lastCity, requestError } }: IAppState = yield select(getState);
+function* getWeatherDataSaga(type: string, cityName: string): SagaIterator {
+  const { content: { requestError } }: IAppState = yield select(getState);
 
   if (requestError.status > 0) {
     yield put(CONTENT_ACTIONS.setRequestError(DEFAULT_REQUEST_ERROR));
   }
 
   if (type === CONTENT_TYPES.GET_CURRENT_WEATHER) {
-    return yield call(apiGetCurrentWeather, { city: lastCity });
+    return yield call(apiGetCurrentWeather, { city: cityName });
   }
 
-  return yield call(apiGetFiveDaysForecast, { city: lastCity });
+  return yield call(apiGetFiveDaysForecast, { city: cityName });
 }
-// TODO: Try typing weatherData
+
 function* setWeatherSaga(weatherData: AxiosResponse, type: string): SagaIterator {
   if (!weatherData) return;
 
   if (weatherData.status < ApiErrorStatusCode.START_ERROR_CODES) {
     if (type === CONTENT_TYPES.GET_CURRENT_WEATHER) {
       yield put(CONTENT_ACTIONS.setCurrentWeather(generateCurrentWeatherObject(weatherData.data)));
+      yield put(CONTENT_ACTIONS.setLastCity(
+        generateLastCityObjectFromCurrentWeatherData(weatherData.data as ICurrentWeatherRequestData),
+      ));
     } else if (type === CONTENT_TYPES.GET_FIVE_DAYS_FORECAST) {
       yield put(CONTENT_ACTIONS.setFiveDaysForecast(generateFiveDaysForecastObject(weatherData.data)));
+      yield put(CONTENT_ACTIONS.setLastCity(
+        generateLastCityObjectFromFiveDaysForecastData(weatherData.data as IFiveDaysForecastRequestData),
+      ));
     }
     yield put(CONTENT_ACTIONS.setCities([]));
   } else {
@@ -88,17 +94,17 @@ function* setWeatherSaga(weatherData: AxiosResponse, type: string): SagaIterator
 }
 
 function* getCurrentWeatherSaga(
-  { type }: ReturnType<typeof CONTENT_ACTIONS.getCurrentWeather>,
+  { type, payload: cityName }: ReturnType<typeof CONTENT_ACTIONS.getCurrentWeather>,
 ): SagaIterator {
-  const weatherData: AxiosResponse<ICurrentWeatherRequestData> = yield call(getWeatherDataSaga, type);
+  const weatherData: AxiosResponse<ICurrentWeatherRequestData> = yield call(getWeatherDataSaga, type, cityName);
 
   yield call(setWeatherSaga, weatherData, type);
 }
 
 function* getFiveDaysForecastSaga(
-  { type }: ReturnType<typeof CONTENT_ACTIONS.getFiveDaysForecast>,
+  { type, payload: cityName }: ReturnType<typeof CONTENT_ACTIONS.getFiveDaysForecast>,
 ): SagaIterator {
-  const weatherData: AxiosResponse<IFiveDaysForecastRequestData> = yield call(getWeatherDataSaga, type);
+  const weatherData: AxiosResponse<IFiveDaysForecastRequestData> = yield call(getWeatherDataSaga, type, cityName);
 
   yield call(setWeatherSaga, weatherData, type);
 }

@@ -17,7 +17,6 @@ interface IProps {
   requestError: IContentRootState['requestError'],
   getCities: typeof CONTENT_ACTIONS.getCities,
   getWeather: typeof CONTENT_ACTIONS.getCurrentWeather | typeof CONTENT_ACTIONS.getFiveDaysForecast,
-  setLastCity: typeof CONTENT_ACTIONS.setLastCity,
   setCities: typeof CONTENT_ACTIONS.setCities,
 }
 
@@ -27,19 +26,21 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
   requestError,
   getCities,
   getWeather,
-  setLastCity,
   setCities,
 }) => {
   const [inputError, setInputError] = useState<boolean>(false);
+  const [currentCityName, setCurrentCityName] = useState<string>('');
 
-  const onFormSubmit = useCallback((event) => {
+  const onFormSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (lastCity.trim() && !inputError) {
-      getWeather();
+    if (currentCityName.trim() && !inputError) {
+      getWeather(currentCityName);
     }
-  }, [getWeather, inputError, lastCity]);
+  }, [currentCityName, getWeather, inputError]);
 
-  const onCityInputChange = useCallback(({ target: { value } }) => {
+  const onCityInputChange = useCallback((
+    { target: { value } }: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     if (cities.length > 0) {
       setCities([]);
     }
@@ -50,12 +51,12 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
       setInputError(false);
     }
 
-    setLastCity(value);
+    setCurrentCityName(value);
 
     if (value) {
-      getCities();
+      getCities(value);
     }
-  }, [cities, setLastCity, inputError, getCities, setCities]);
+  }, [cities, inputError, getCities, setCities]);
 
   return (
     <form
@@ -66,7 +67,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
         <input
           className={classNames(styles.weather__input, inputError && styles['weather__input--error'])}
           type="text"
-          value={lastCity}
+          value={currentCityName}
           onChange={onCityInputChange}
           placeholder="City name"
         />
@@ -74,24 +75,32 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
           cities.length !== 0 && (
             <ul className={styles['weather__cities-list']}>
               {
-                cities.map((currentCity: ICity) => (currentCity.id
-                  ? (
-                    <li
-                      key={`city-${currentCity.id}`}
-                      className={styles['weather__cities-item']}
-                    >
-                      <p className={styles['weather__cities-name']}>
-                        {`${currentCity.name}, ${CountryCode[currentCity.country]}`}
-                      </p>
-                      <Icon
-                        icon={`flag-${generateCountryNameForSprite(currentCity.country)}`}
-                        size={16}
-                      />
-                    </li>
-                  )
-                  : (
-                    <p key={currentCity.name}>No matches</p>
-                  )))
+                cities.map((currentCity: ICity) => (
+                  <li
+                    key={`city-${currentCity.id}`}
+                    className={styles['weather__cities-item']}
+                  >
+                    {
+                      currentCity.id
+                        ? (
+                          <React.Fragment>
+                            <p className={styles['weather__cities-name']}>
+                              {`${currentCity.name}, ${CountryCode[currentCity.country]}`}
+                            </p>
+                            <Icon
+                              icon={`flag-${generateCountryNameForSprite(currentCity.country)}`}
+                              size={16}
+                            />
+                          </React.Fragment>
+                        )
+                        : (
+                          <p className={styles['weather__cities-name']}>
+                            No matches
+                          </p>
+                        )
+                    }
+                  </li>
+                ))
               }
             </ul>
           )

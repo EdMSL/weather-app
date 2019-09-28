@@ -40,7 +40,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   getCities: CONTENT_ACTION.getCities,
   getFiveDaysForecast: CONTENT_ACTION.getFiveDaysForecast,
-  setLastCity: CONTENT_ACTION.setLastCity,
   setCities: CONTENT_ACTION.setCities,
 };
 
@@ -53,7 +52,6 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
   requestError,
   getCities,
   getFiveDaysForecast,
-  setLastCity,
   setCities,
 }) => (
   <React.Fragment>
@@ -63,7 +61,6 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
       requestError={requestError}
       getCities={getCities}
       getWeather={getFiveDaysForecast}
-      setLastCity={setLastCity}
       setCities={setCities}
     />
     <div className={styles.weather__view}>
