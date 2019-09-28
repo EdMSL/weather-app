@@ -30,7 +30,7 @@ export const generateCityObject = (cityData: IResponseGetCitiesListItem): ICity 
 
 export const generateLastCityObjectFromCurrentWeatherData = (cityData: ICurrentWeatherRequestData): ICity => ({
   country: cityData.sys.country,
-  id: cityData.id,
+  id: cityData.sys.id,
   name: cityData.name,
 });
 

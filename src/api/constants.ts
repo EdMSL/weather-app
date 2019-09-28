@@ -132,6 +132,6 @@ export const ApiErrorStatusCode = {
 export const ApiOpenWeatherRequestUrl = {
   BASE: 'https://api.openweathermap.org/data/2.5/',
   FIND_CITIES: `find?${REQUEST_PARAMETERS}&q=`,
-  GET_CURRENT_WEATHER: `weather?${REQUEST_PARAMETERS}&q=`,
-  GET_5_DAYS_FORECAST: `forecast?${REQUEST_PARAMETERS}&q=`,
+  GET_CURRENT_WEATHER: `weather?${REQUEST_PARAMETERS}`,
+  GET_5_DAYS_FORECAST: `forecast?${REQUEST_PARAMETERS}`,
 };

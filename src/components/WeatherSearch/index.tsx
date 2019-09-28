@@ -29,6 +29,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
   setCities,
 }) => {
   const [inputError, setInputError] = useState<boolean>(false);
+  const [inputErrorText, setInputErrorText] = useState<string>('');
   const [currentCityName, setCurrentCityName] = useState<string>('');
 
   const onFormSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
@@ -37,6 +38,10 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
       getWeather(currentCityName);
     }
   }, [currentCityName, getWeather, inputError]);
+
+  const onCitiesListItemClick = useCallback((id: number) => {
+    getWeather(id);
+  }, [getWeather]);
 
   const onCityInputChange = useCallback((
     { target: { value } }: React.ChangeEvent<HTMLInputElement>,
@@ -47,15 +52,20 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
 
     if (/[^a-z-\s]/i.test(value)) {
       setInputError(true);
-    } else if (inputError) {
-      setInputError(false);
+      setInputErrorText('Only latin letters, - and space simbols!');
+      // FIXME RegExp below is not working
+    } else if (value.match(/[^a-z\s]{1}[^a-z-\s]+/i)) {
+      setInputError(true);
+      setInputErrorText('First simbol mast be a letter!');
+    } else {
+      if (inputError) {
+        setInputError(false);
+      }
+
+      getCities(value);
     }
 
     setCurrentCityName(value);
-
-    if (value) {
-      getCities(value);
-    }
   }, [cities, inputError, getCities, setCities]);
 
   return (
@@ -83,7 +93,10 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
                     {
                       currentCity.id
                         ? (
-                          <React.Fragment>
+                          <Button
+                            className={styles['weather__cities-item-btn']}
+                            onClick={() => onCitiesListItemClick(currentCity.id)}
+                          >
                             <p className={styles['weather__cities-name']}>
                               {`${currentCity.name}, ${CountryCode[currentCity.country]}`}
                             </p>
@@ -91,7 +104,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
                               icon={`flag-${generateCountryNameForSprite(currentCity.country)}`}
                               size={16}
                             />
-                          </React.Fragment>
+                          </Button>
                         )
                         : (
                           <p className={styles['weather__cities-name']}>
@@ -105,31 +118,37 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
             </ul>
           )
         }
-        {
-          inputError && (
-            <p className={styles.weather__error}>
-              Only latin letters, - and space simbols!
-            </p>
-          )
-        }
-        {
-          requestError.status === ApiErrorStatusCode.NOT_FOUND && (
-            <p className={styles.weather__error}>
-              {`City ${requestError.statusText.toLowerCase()}`}
-            </p>
-          )
-        }
-        {
-          requestError.status > 0 && requestError.status !== ApiErrorStatusCode.NOT_FOUND && (
-            <p className={styles.weather__error}>
-              Something wrong. Please, try again.
-            </p>
-          )
-        }
+        <Button
+          className={styles['weather__submit-btn']}
+          isSubmit
+        >
+          <Icon
+            className={styles['weather__search-icon']}
+            icon="search"
+          />
+        </Button>
       </div>
-      <Button isSubmit>
-        Get weather
-      </Button>
+      {
+        inputError && (
+          <p className={styles.weather__error}>
+            {inputErrorText}
+          </p>
+        )
+      }
+      {
+        requestError.status === ApiErrorStatusCode.NOT_FOUND && (
+          <p className={styles.weather__error}>
+            {`City ${requestError.statusText.toLowerCase()}`}
+          </p>
+        )
+      }
+      {
+        requestError.status > 0 && requestError.status !== ApiErrorStatusCode.NOT_FOUND && (
+          <p className={styles.weather__error}>
+            Something wrong. Please, try again.
+          </p>
+        )
+      }
     </form>
   );
 };

@@ -13,7 +13,7 @@ interface IGetCities {
 }
 
 interface IGetWeather {
-  city: string,
+  city: string | number,
 }
 
 const getResult = (response: AxiosResponse): AxiosResponse => response;
@@ -36,7 +36,7 @@ export const apiGetCurrentWeather = (
 ): AxiosPromise<ICurrentWeatherRequestData> => (
   client({
     method: 'GET',
-    url: `${ApiOpenWeatherRequestUrl.GET_CURRENT_WEATHER}${data.city}`,
+    url: `${ApiOpenWeatherRequestUrl.GET_CURRENT_WEATHER}${typeof data.city === 'string' ? '&q=' : '&id='}${data.city}`,
   })
     .then(getResult)
     .catch(onError)

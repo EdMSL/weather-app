@@ -41,6 +41,8 @@ function* getCitiesSaga(
 ): SagaIterator {
   yield delay(REQUEST_DELAY_TIME);
 
+  if (!cityName) return;
+
   const citiesData: AxiosResponse<IGetCitiesRequestData> = yield call(apiGetCities, { city: cityName });
 
   if (citiesData.data.list) {
@@ -58,7 +60,7 @@ function* getCitiesSaga(
   }
 }
 
-function* getWeatherDataSaga(type: string, cityName: string): SagaIterator {
+function* getWeatherDataSaga(type: string, cityName: string | number): SagaIterator {
   const { content: { requestError } }: IAppState = yield select(getState);
 
   if (requestError.status > 0) {

@@ -16,12 +16,12 @@ export const getCities = (cityName: string): IActionReturnType<string> => ({
   payload: cityName,
 });
 
-export const getCurrentWeather = (cityName: string): IActionReturnType<string> => ({
+export const getCurrentWeather = (cityName: string | number): IActionReturnType<string | number> => ({
   type: CONTENT_TYPES.GET_CURRENT_WEATHER,
   payload: cityName,
 });
 
-export const getFiveDaysForecast = (cityName: string): IActionReturnType<string> => ({
+export const getFiveDaysForecast = (cityName: string | number): IActionReturnType<string | number> => ({
   type: CONTENT_TYPES.GET_FIVE_DAYS_FORECAST,
   payload: cityName,
 });
