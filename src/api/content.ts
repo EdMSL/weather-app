@@ -1,4 +1,6 @@
-import { AxiosPromise, AxiosResponse, AxiosError } from 'axios';
+import {
+  AxiosPromise, AxiosResponse, AxiosError, AxiosRequestConfig,
+} from 'axios';
 
 import { client } from '$api/config';
 import {
@@ -20,12 +22,18 @@ const getResult = (response: AxiosResponse): AxiosResponse => response;
 
 const onError = ({ response }: AxiosError): AxiosResponse => response;
 
+const getRequestParams = (city: string | number): AxiosRequestConfig['params'] => ({
+  id: typeof city === 'string' ? '' : city,
+  q: typeof city === 'string' ? city : '',
+});
+
 export const apiGetCities = (
   data: IGetCities,
 ): AxiosPromise<IGetCitiesRequestData> => (
   client({
     method: 'GET',
-    url: `${ApiOpenWeatherRequestUrl.FIND_CITIES}${data.city}`,
+    url: `${ApiOpenWeatherRequestUrl.FIND_CITIES}`,
+    params: getRequestParams(data.city),
   })
     .then(getResult)
     .catch(onError)
@@ -36,7 +44,8 @@ export const apiGetCurrentWeather = (
 ): AxiosPromise<ICurrentWeatherRequestData> => (
   client({
     method: 'GET',
-    url: `${ApiOpenWeatherRequestUrl.GET_CURRENT_WEATHER}${typeof data.city === 'string' ? '&q=' : '&id='}${data.city}`,
+    url: `${ApiOpenWeatherRequestUrl.GET_CURRENT_WEATHER}`,
+    params: getRequestParams(data.city),
   })
     .then(getResult)
     .catch(onError)
@@ -47,7 +56,8 @@ export const apiGetFiveDaysForecast = (
 ): AxiosPromise<IFiveDaysForecastRequestData> => (
   client({
     method: 'GET',
-    url: `${ApiOpenWeatherRequestUrl.GET_5_DAYS_FORECAST}${data.city}`,
+    url: `${ApiOpenWeatherRequestUrl.GET_5_DAYS_FORECAST}`,
+    params: getRequestParams(data.city),
   })
     .then(getResult)
     .catch(onError)

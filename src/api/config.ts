@@ -9,5 +9,10 @@ export const client = (props: AxiosRequestConfig): AxiosPromise => axios({
   headers: {
     'Content-Type': 'text/plain',
   },
+  params: {
+    ...props.params,
+    units: 'metric',
+    lang: 'en',
+  },
   data: props.data,
 });

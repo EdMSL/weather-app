@@ -36,11 +36,13 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
     event.preventDefault();
     if (currentCityName.trim() && !inputError) {
       getWeather(currentCityName);
+      setCurrentCityName('');
     }
   }, [currentCityName, getWeather, inputError]);
 
   const onCitiesListItemClick = useCallback((id: number) => {
     getWeather(id);
+    setCurrentCityName('');
   }, [getWeather]);
 
   const onCityInputChange = useCallback((
@@ -53,8 +55,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
     if (/[^a-z-\s]/i.test(value)) {
       setInputError(true);
       setInputErrorText('Only latin letters, - and space simbols!');
-      // FIXME RegExp below is not working
-    } else if (value.match(/[^a-z\s]{1}[^a-z-\s]+/i)) {
+    } else if (value.trim().match(/^[^a-z\s]/i)) {
       setInputError(true);
       setInputErrorText('First simbol mast be a letter!');
     } else {
@@ -95,7 +96,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
                         ? (
                           <Button
                             className={styles['weather__cities-item-btn']}
-                            onClick={() => onCitiesListItemClick(currentCity.id)}
+                            onClick={(): void => onCitiesListItemClick(currentCity.id)}
                           >
                             <p className={styles['weather__cities-name']}>
                               {`${currentCity.name}, ${CountryCode[currentCity.country]}`}
@@ -107,7 +108,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
                           </Button>
                         )
                         : (
-                          <p className={styles['weather__cities-name']}>
+                          <p className={styles['weather__no-cities-item']}>
                             No matches
                           </p>
                         )

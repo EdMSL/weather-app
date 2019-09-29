@@ -119,7 +119,7 @@ export interface IFiveDaysForecastRequestData {
 }
 
 const API_KEY = '09864f104fd238ceb72091abd292903c';
-const REQUEST_PARAMETERS = `APPID=${API_KEY}&units=metric&lang=en`;
+const REQUEST_PARAMETERS = `APPID=${API_KEY}`;
 
 export const ApiErrorStatusCode = {
   START_ERROR_CODES: 300,
@@ -131,7 +131,7 @@ export const ApiErrorStatusCode = {
 
 export const ApiOpenWeatherRequestUrl = {
   BASE: 'https://api.openweathermap.org/data/2.5/',
-  FIND_CITIES: `find?${REQUEST_PARAMETERS}&q=`,
+  FIND_CITIES: `find?${REQUEST_PARAMETERS}`,
   GET_CURRENT_WEATHER: `weather?${REQUEST_PARAMETERS}`,
   GET_5_DAYS_FORECAST: `forecast?${REQUEST_PARAMETERS}`,
 };
