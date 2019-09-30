@@ -81,7 +81,13 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
       setCities={setCities}
     />
     <div className={styles.weather__view}>
-      <h2 className="visually-hidden">5 deys forecast</h2>
+      {
+        !fiveDaysForecast.city && (
+          <h2 className={styles['weather__main-title']}>
+            5 deys forecast
+          </h2>
+        )
+      }
       {
         fiveDaysForecast.city && (
           <div className={styles.weather__container}>
