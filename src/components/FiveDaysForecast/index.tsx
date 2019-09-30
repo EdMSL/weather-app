@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import { Icon } from '$components/UI/Icon';
 import { WeatherSearch } from '$components/WeatherSearch';
@@ -80,9 +81,7 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
       setCities={setCities}
     />
     <div className={styles.weather__view}>
-      <h2 className={styles.weather__title}>
-          5 deys forecast
-      </h2>
+      <h2 className="visually-hidden">5 deys forecast</h2>
       {
         fiveDaysForecast.city && (
           <div className={styles.weather__container}>
@@ -96,6 +95,9 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
                   icon={`flag-${generateCountryNameForSprite(fiveDaysForecast.country)}`}
                 />
               </div>
+              <p className={classNames(styles.weather__info, styles.weather__title)}>
+                5 deys forecast
+              </p>
               <div className={styles.weather__info}>
                 <p className={styles['weather__forecast-info']}>
                   {generateFiveDaysForecastInterval(fiveDaysForecast.list)}

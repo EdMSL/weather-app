@@ -1,3 +1,16 @@
+.weather__title {
+  width: $small-wrapper;
+  margin: 0 auto 20px;
+  padding: 16px;
+
+  font-size: 24px;
+  line-height: 26px;
+  font-weight: 400;
+
+  background-color: $bg-forecast-card-color;
+  border-radius: 10px;
+}
+
 .weather__card {
   position: relative;
 

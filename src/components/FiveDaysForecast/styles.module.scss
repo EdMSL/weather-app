@@ -10,6 +10,7 @@
 }
 
 .weather__info {
+  @include reset-indents;
   display: flex;
   align-items: center;
   padding: 16px;
@@ -24,6 +25,11 @@
   &:last-child {
     border-bottom-right-radius: 0;
   }
+}
+
+.weather__title {
+  font-size: 24px;
+  line-height: 26px;
 }
 
 .weather__city {

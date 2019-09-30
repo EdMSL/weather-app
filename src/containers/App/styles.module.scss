@@ -27,10 +27,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: $small-wrapper;
+  margin: 0 auto;
   padding-top: 20px;
 }
 
 .router__button {
+  flex-grow: 1;
   margin-right: 20px;
   padding: $button-main-padding;
 

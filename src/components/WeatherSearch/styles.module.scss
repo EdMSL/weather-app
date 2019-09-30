@@ -2,12 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: $small-wrapper;
+  margin: 0 auto 20px;
 }
 
 .weather__input-block {
   position: relative;
 
-  margin-bottom: 10px;
+  width: 100%;
 }
 
 .weather__overlay {
@@ -24,7 +26,7 @@
   position: relative;
   z-index: 5;
 
-  width: 300px;
+  width: 100%;
   padding: 10px;
   padding-right: 40px;
 

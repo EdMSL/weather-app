@@ -39,6 +39,7 @@ const getState = (state: IAppState): IAppState => state;
 
 function* changeLocationSaga(): SagaIterator {
   yield put(CONTENT_ACTIONS.setRequestError(DEFAULT_REQUEST_ERROR));
+  yield put(CONTENT_ACTIONS.setCities([]));
 }
 
 function* getCitiesSaga(
