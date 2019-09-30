@@ -23,8 +23,13 @@ const getResult = (response: AxiosResponse): AxiosResponse => response;
 const onError = ({ response }: AxiosError): AxiosResponse => response;
 
 const getRequestParams = (city: string | number): AxiosRequestConfig['params'] => ({
-  id: typeof city === 'string' ? '' : city,
-  q: typeof city === 'string' ? city : '',
+  ...(typeof city === 'number'
+    ? { id: city }
+    : {}
+  ),
+  ...(typeof city === 'string' ? {
+    q: city,
+  } : {}),
 });
 
 export const apiGetCities = (

@@ -47,6 +47,7 @@ const mapDispatchToProps = {
   getCities: CONTENT_ACTION.getCities,
   getFiveDaysForecast: CONTENT_ACTION.getFiveDaysForecast,
   setCities: CONTENT_ACTION.setCities,
+  setRequestError: CONTENT_ACTION.setRequestError,
 };
 
 export type IProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
@@ -61,6 +62,7 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
   getCities,
   getFiveDaysForecast,
   setCities,
+  setRequestError,
 }) => (
   <React.Fragment>
     <WeatherSearch
@@ -78,49 +80,49 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
           5 deys forecast
       </h2>
       {
-          fiveDaysForecast.city && (
-            <React.Fragment>
-              <div className={styles.weather__container}>
-                <p className={styles.weather__city}>
-                  {fiveDaysForecast.city}
-                </p>
-                <Icon
-                  className={styles.weather__flag}
-                  icon={generateCountryNameForSprite(fiveDaysForecast.country)}
-                />
-                <div className={styles.weather__cards}>
-                  {
-                    fiveDaysForecast.list.map((currentForecast: IFiveDaysForecastListItem) => (
-                      <div
-                        key={`item${currentForecast.date}`}
-                        className={styles.weather__card}
-                      >
-                        <p className={styles.weather__date}>
-                          {generateDayMonthStr(currentForecast.dateTxt)}
-                        </p>
-                        <p className={styles.weather__time}>
-                          {`${new Date(currentForecast.dateTxt).getHours()}:00`}
-                        </p>
-                        <p className={styles.weather__temp}>
-                          {Math.round(currentForecast.temp)}
-                          <sup>&#176;</sup>
-                        </p>
-                        <p>
-                          {toStringWithFirstUppercaseLetter(currentForecast.weather.description)}
-                        </p>
-                        <img
-                          src={`https://openweathermap.org/img/wn/${currentForecast.weather.icon}@2x.png`} // eslint-disable-line max-len
-                          alt="current weather"
-                          title={currentForecast.weather.description}
-                        />
-                      </div>
-                    ))
-                  }
-                </div>
+        fiveDaysForecast.city && (
+          <React.Fragment>
+            <div className={styles.weather__container}>
+              <p className={styles.weather__city}>
+                {fiveDaysForecast.city}
+              </p>
+              <Icon
+                className={styles.weather__flag}
+                icon={generateCountryNameForSprite(fiveDaysForecast.country)}
+              />
+              <div className={styles.weather__cards}>
+                {
+                  fiveDaysForecast.list.map((currentForecast: IFiveDaysForecastListItem) => (
+                    <div
+                      key={`item${currentForecast.date}`}
+                      className={styles.weather__card}
+                    >
+                      <p className={styles.weather__date}>
+                        {generateDayMonthStr(currentForecast.dateTxt)}
+                      </p>
+                      <p className={styles.weather__time}>
+                        {`${new Date(currentForecast.dateTxt).getHours()}:00`}
+                      </p>
+                      <p className={styles.weather__temp}>
+                        {Math.round(currentForecast.temp)}
+                        <sup>&#176;</sup>
+                      </p>
+                      <p>
+                        {toStringWithFirstUppercaseLetter(currentForecast.weather.description)}
+                      </p>
+                      <img
+                        src={`https://openweathermap.org/img/wn/${currentForecast.weather.icon}@2x.png`} // eslint-disable-line max-len
+                        alt="current weather"
+                        title={currentForecast.weather.description}
+                      />
+                    </div>
+                  ))
+                }
               </div>
-            </React.Fragment>
-          )
-        }
+            </div>
+          </React.Fragment>
+        )
+      }
     </div>
   </React.Fragment>
 );

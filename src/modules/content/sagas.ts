@@ -7,6 +7,7 @@ import {
   delay,
 } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
+import { LOCATION_CHANGE } from 'connected-react-router';
 
 import {
   ApiErrorStatusCode,
@@ -35,6 +36,10 @@ import { IAppState } from '$redux/store';
 const REQUEST_DELAY_TIME = 500;
 
 const getState = (state: IAppState): IAppState => state;
+
+function* changeLocationSaga(): SagaIterator {
+  yield put(CONTENT_ACTIONS.setRequestError(DEFAULT_REQUEST_ERROR));
+}
 
 function* getCitiesSaga(
   { payload: cityName }: ReturnType<typeof CONTENT_ACTIONS.getCities>,
@@ -100,7 +105,7 @@ function* setWeatherSaga(weatherData: AxiosResponse, type: string): SagaIterator
     }
     yield put(CONTENT_ACTIONS.setCities([]));
   } else {
-    yield put(CONTENT_ACTIONS.setRequestError(generateRequestErrorObject(weatherData)));
+    yield put(CONTENT_ACTIONS.setRequestError(generateRequestErrorObject(weatherData as AxiosResponse)));
   }
 }
 
@@ -121,6 +126,7 @@ function* getFiveDaysForecastSaga(
 }
 
 export default function* contentSaga(): SagaIterator {
+  yield takeLatest(LOCATION_CHANGE, changeLocationSaga);
   yield takeLatest(CONTENT_TYPES.GET_CITIES, getCitiesSaga);
   yield takeLatest(CONTENT_TYPES.GET_CURRENT_WEATHER, getCurrentWeatherSaga);
   yield takeLatest(CONTENT_TYPES.GET_FIVE_DAYS_FORECAST, getFiveDaysForecastSaga);
