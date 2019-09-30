@@ -16,12 +16,16 @@ export const getCities = (cityName: string): IActionReturnType<string> => ({
   payload: cityName,
 });
 
-export const getCurrentWeather = (cityName: string | number): IActionReturnType<string | number> => ({
+export const getCurrentWeather = (
+  cityName: string | number,
+): IActionReturnType<string | number> => ({
   type: CONTENT_TYPES.GET_CURRENT_WEATHER,
   payload: cityName,
 });
 
-export const getFiveDaysForecast = (cityName: string | number): IActionReturnType<string | number> => ({
+export const getFiveDaysForecast = (
+  cityName: string | number,
+): IActionReturnType<string | number> => ({
   type: CONTENT_TYPES.GET_FIVE_DAYS_FORECAST,
   payload: cityName,
 });
@@ -45,6 +49,13 @@ export const setFiveDaysForecast = (
 ): IActionReturnType<typeof fiveDaysForecast> => ({
   type: CONTENT_TYPES.SET_FIVE_DAYS_FORECAST,
   payload: fiveDaysForecast,
+});
+
+export const setIsLoading = (
+  isLoading: IContentRootState['isLoading'],
+): IActionReturnType<typeof isLoading> => ({
+  type: CONTENT_TYPES.SET_IS_LOADING,
+  payload: isLoading,
 });
 
 export const setLastCity = (

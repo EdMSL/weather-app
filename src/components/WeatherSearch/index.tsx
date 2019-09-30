@@ -1,7 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
+import { LoaderOptionsPlugin } from 'webpack';
 
 import { ApiErrorStatusCode } from '$api/constants';
+import { KeyCode } from '$constants/keyCodes';
 import { Button } from '$components/UI/Button';
 import * as CONTENT_ACTIONS from '$modules/content/actions';
 import { IContentRootState, ICity } from '$modules/content/reducer';
@@ -13,6 +15,7 @@ const styles = require('./styles.module.scss');
 
 interface IProps {
   cities: IContentRootState['cities'],
+  isLoading: IContentRootState['isLoading'],
   lastCity: IContentRootState['lastCity'],
   requestError: IContentRootState['requestError'],
   getCities: typeof CONTENT_ACTIONS.getCities,
@@ -22,23 +25,39 @@ interface IProps {
 
 export const WeatherSearch: React.FunctionComponent<IProps> = ({
   cities,
+  isLoading,
   lastCity,
   requestError,
   getCities,
   getWeather,
   setCities,
 }) => {
-  const [inputError, setInputError] = useState<boolean>(false);
-  const [inputErrorText, setInputErrorText] = useState<string>('');
+  const [isInputError, setIsInputError] = useState<boolean>(false);
+  const [isShowCitiesList, setIsShowCitiesList] = useState<boolean>(true);
+  const [isInputErrorText, setIsInputErrorText] = useState<string>('');
   const [currentCityName, setCurrentCityName] = useState<string>('');
+
+  const onEscKeyPress = useCallback((event: KeyboardEvent) => {
+    if (event.code === KeyCode.ESC) {
+      console.log('press esc');
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('keyup', onEscKeyPress);
+
+    return (): void => {
+      window.removeEventListener('keyup', onEscKeyPress);
+    };
+  });
 
   const onFormSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (currentCityName.trim() && !inputError) {
+    if (currentCityName.trim() && !isInputError) {
       getWeather(currentCityName);
       setCurrentCityName('');
     }
-  }, [currentCityName, getWeather, inputError]);
+  }, [currentCityName, getWeather, isInputError]);
 
   const onCitiesListItemClick = useCallback((id: number) => {
     getWeather(id);
@@ -53,21 +72,21 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
     }
 
     if (/[^a-z-\s]/i.test(value)) {
-      setInputError(true);
-      setInputErrorText('Only latin letters, - and space simbols!');
+      setIsInputError(true);
+      setIsInputErrorText('Only latin letters, - and space simbols!');
     } else if (value.trim().match(/^[^a-z\s]/i)) {
-      setInputError(true);
-      setInputErrorText('First simbol mast be a letter!');
+      setIsInputError(true);
+      setIsInputErrorText('First simbol mast be a letter!');
     } else {
-      if (inputError) {
-        setInputError(false);
+      if (isInputError) {
+        setIsInputError(false);
       }
 
       getCities(value);
     }
 
     setCurrentCityName(value);
-  }, [cities, inputError, getCities, setCities]);
+  }, [cities, isInputError, getCities, setCities]);
 
   return (
     <form
@@ -76,7 +95,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
     >
       <div className={styles['weather__input-block']}>
         <input
-          className={classNames(styles.weather__input, inputError && styles['weather__input--error'])}
+          className={classNames(styles.weather__input, isInputError && styles['weather__input--error'])}
           type="text"
           value={currentCityName}
           onChange={onCityInputChange}
@@ -84,7 +103,7 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
         />
         {
           cities.length !== 0 && (
-            <ul className={styles['weather__cities-list']}>
+            <ul className={classNames(styles['weather__cities-list'], !isShowCitiesList && 'hide')}>
               {
                 cities.map((currentCity: ICity) => (
                   <li
@@ -119,20 +138,39 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
             </ul>
           )
         }
+        {
+          /* FIXME: Search icon does not go back after first request,
+            if param icon={isLoading ? ... : ...}.
+            No idea how fix it, so i do this by hiding search icon */
+        }
         <Button
           className={styles['weather__submit-btn']}
           isSubmit
         >
           <Icon
-            className={styles['weather__search-icon']}
+            className={classNames(
+              isLoading && 'hide',
+              styles['weather__submit-btn-icon'],
+            )}
             icon="search"
           />
+          {
+            isLoading && (
+              <Icon
+                className={classNames(
+                  'rotation-animation',
+                  styles['weather__submit-btn-icon'],
+                )}
+                icon="loader"
+              />
+            )
+          }
         </Button>
       </div>
       {
-        inputError && (
+        isInputError && (
           <p className={styles.weather__error}>
-            {inputErrorText}
+            {isInputErrorText}
           </p>
         )
       }

@@ -61,6 +61,9 @@ function* getCitiesSaga(
 }
 
 function* getWeatherDataSaga(type: string, cityName: string | number): SagaIterator {
+  yield put(CONTENT_ACTIONS.setIsLoading(true));
+
+  let weatherData: AxiosResponse;
   const { content: { requestError } }: IAppState = yield select(getState);
 
   if (requestError.status > 0) {
@@ -68,10 +71,14 @@ function* getWeatherDataSaga(type: string, cityName: string | number): SagaItera
   }
 
   if (type === CONTENT_TYPES.GET_CURRENT_WEATHER) {
-    return yield call(apiGetCurrentWeather, { city: cityName });
+    weatherData = yield call(apiGetCurrentWeather, { city: cityName });
+  } else {
+    weatherData = yield call(apiGetFiveDaysForecast, { city: cityName });
   }
 
-  return yield call(apiGetFiveDaysForecast, { city: cityName });
+  yield put(CONTENT_ACTIONS.setIsLoading(false));
+
+  return weatherData;
 }
 
 function* setWeatherSaga(weatherData: AxiosResponse, type: string): SagaIterator {

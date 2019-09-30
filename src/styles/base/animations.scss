@@ -9,16 +9,12 @@
   }
 }
 
-.show {
-  animation: show 0.5s linear;
+.rotation-animation {
+  animation: rotatation 1s linear infinite;
 }
 
-@keyframes show {
-  0% {
-    opacity: 0;
-  }
-
+@keyframes rotatation {
   100% {
-    opacity: 1;
+    transform: rotate(360deg);
   }
 }

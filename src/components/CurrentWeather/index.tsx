@@ -25,6 +25,7 @@ const styles = require('./styles.module.scss');
 interface IStateProps {
   cities: IContentRootState['cities'],
   currentWeather: ICurrentWeather,
+  isLoading: IContentRootState['isLoading'],
   lastCity: IContentRootState['lastCity'],
   requestError: IRequestError,
 }
@@ -33,12 +34,14 @@ const mapStateToProps = ({
   content: {
     cities,
     currentWeather,
+    isLoading,
     lastCity,
     requestError,
   },
 }: IAppState): IStateProps => ({
   cities,
   currentWeather,
+  isLoading,
   lastCity,
   requestError,
 });
@@ -54,6 +57,7 @@ export type IProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToPr
 const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
   cities,
   currentWeather,
+  isLoading,
   lastCity,
   requestError,
   getCities,
@@ -64,6 +68,7 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
     <WeatherSearch
       cities={cities}
       lastCity={lastCity}
+      isLoading={isLoading}
       requestError={requestError}
       getCities={getCities}
       getWeather={getCurrentWeather}

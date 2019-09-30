@@ -62,6 +62,7 @@ export type IContentRootState = Readonly<{
   cities: ICity[],
   currentWeather: ICurrentWeather,
   fiveDaysForecast: IFiveDaysForecast,
+  isLoading: boolean,
   lastCity: ICity,
   requestError: IRequestError,
 }>;
@@ -98,6 +99,14 @@ const setFiveDaysForecast: IActionHandler<typeof CONTENT_ACTIONS.setFiveDaysFore
   fiveDaysForecast,
 });
 
+const setIsLoading: IActionHandler<typeof CONTENT_ACTIONS.setIsLoading> = (
+  state,
+  { payload: isLoading },
+) => ({
+  ...state,
+  isLoading,
+});
+
 const setLastCity: IActionHandler<typeof CONTENT_ACTIONS.setLastCity> = (
   state,
   { payload: lastCity },
@@ -118,6 +127,7 @@ const HANDLERS = {
   [CONTENT_TYPES.SET_CITIES]: setCities,
   [CONTENT_TYPES.SET_CURRENT_WEATHER]: setCurrentWeather,
   [CONTENT_TYPES.SET_FIVE_DAYS_FORECAST]: setFiveDaysForecast,
+  [CONTENT_TYPES.SET_IS_LOADING]: setIsLoading,
   [CONTENT_TYPES.SET_LAST_CITY]: setLastCity,
   [CONTENT_TYPES.SET_REQUEST_ERROR]: setRequestError,
 };
@@ -126,6 +136,7 @@ const INITIAL_STATE: IContentRootState = {
   cities: [],
   currentWeather: DEFAULT_CURRENT_WEATHER,
   fiveDaysForecast: DEFAULT_FIVE_DAYS_FORECAST,
+  isLoading: false,
   lastCity: DEFAULT_EMPTY_CITY,
   requestError: DEFAULT_REQUEST_ERROR,
 };
