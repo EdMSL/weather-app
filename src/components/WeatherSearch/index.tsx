@@ -1,21 +1,27 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useRef,
+} from 'react';
 import classNames from 'classnames';
-import { LoaderOptionsPlugin } from 'webpack';
 
 import { ApiErrorStatusCode } from '$api/constants';
+import { CountryCode } from '$constants/countrysCodes';
 import { KeyCode } from '$constants/keyCodes';
 import { Button } from '$components/UI/Button';
 import * as CONTENT_ACTIONS from '$modules/content/actions';
 import { IContentRootState, ICity } from '$modules/content/reducer';
 import { Icon } from '$components/UI/Icon';
+import { getRandomInt } from '$utils/numbers';
 import { generateCountryNameForSprite } from '$utils/transformData';
-import { CountryCode } from '$constants/countrysCodes';
 
 const styles = require('./styles.module.scss');
 
 interface IProps {
   cities: IContentRootState['cities'],
-  isLoading: IContentRootState['isLoading'],
+  isCitiesLoading: IContentRootState['isCitiesLoading'],
+  isWeatherLoading: IContentRootState['isWeatherLoading'],
   lastCity: IContentRootState['lastCity'],
   requestError: IContentRootState['requestError'],
   getCities: typeof CONTENT_ACTIONS.getCities,
@@ -25,22 +31,30 @@ interface IProps {
 
 export const WeatherSearch: React.FunctionComponent<IProps> = ({
   cities,
-  isLoading,
+  isCitiesLoading,
+  isWeatherLoading,
   lastCity,
   requestError,
   getCities,
   getWeather,
   setCities,
 }) => {
+  const searchInput = useRef(null);
+
   const [isInputError, setIsInputError] = useState<boolean>(false);
-  const [isShowCitiesList, setIsShowCitiesList] = useState<boolean>(true);
+  const [isShowCitiesList, setIsShowCitiesList] = useState<boolean>(false);
   const [isInputErrorText, setIsInputErrorText] = useState<string>('');
   const [currentCityName, setCurrentCityName] = useState<string>('');
 
   const onEscKeyPress = useCallback((event: KeyboardEvent) => {
     if (event.code === KeyCode.ESC) {
-      console.log('press esc');
+      setIsShowCitiesList(false);
+      searchInput.current.blur();
     }
+  }, [searchInput]);
+
+  const onWeatherOwerlayClick = useCallback(() => {
+    setIsShowCitiesList(false);
   }, []);
 
   useEffect(() => {
@@ -51,23 +65,38 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
     };
   });
 
+  const sendWeatherRequest = useCallback((cityData: string | number) => {
+    getWeather(cityData);
+    setCurrentCityName('');
+    setCities([]);
+    setIsShowCitiesList(false);
+  }, [getWeather, setCities]);
+
   const onFormSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (currentCityName.trim() && !isInputError) {
-      getWeather(currentCityName);
-      setCurrentCityName('');
+    if (currentCityName.trim() && !isInputError && !isWeatherLoading) {
+      sendWeatherRequest(currentCityName);
     }
-  }, [currentCityName, getWeather, isInputError]);
+  }, [currentCityName, isInputError, isWeatherLoading, sendWeatherRequest]);
 
   const onCitiesListItemClick = useCallback((id: number) => {
-    getWeather(id);
-    setCurrentCityName('');
-  }, [getWeather]);
+    sendWeatherRequest(id);
+  }, [sendWeatherRequest]);
+
+  const onCityInputFocus = useCallback(() => {
+    if (cities.length > 0 && !isShowCitiesList) {
+      setIsShowCitiesList(true);
+    }
+  }, [cities, isShowCitiesList]);
 
   const onCityInputChange = useCallback((
     { target: { value } }: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (cities.length > 0) {
+    if (value.trim().length > 0 && !isShowCitiesList) {
+      setIsShowCitiesList(true);
+    }
+
+    if (value.trim().length <= 0) {
       setCities([]);
     }
 
@@ -82,32 +111,65 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
         setIsInputError(false);
       }
 
-      getCities(value);
+      if (value.trim()) {
+        getCities(value.trim());
+      }
     }
 
     setCurrentCityName(value);
-  }, [cities, isInputError, getCities, setCities]);
+  }, [isInputError, getCities, setCities, isShowCitiesList]);
 
   return (
     <form
       className={styles.weather__form}
       onSubmit={onFormSubmit}
     >
+      {
+        cities.length !== 0 && isShowCitiesList && !isInputError && (
+          <div
+            className={styles.weather__overlay}
+            onClick={onWeatherOwerlayClick}
+            onKeyDown={onWeatherOwerlayClick}
+            role="button"
+            tabIndex={0}
+          >
+            <span className="visually-hidden">overlay</span>
+          </div>
+        )
+      }
       <div className={styles['weather__input-block']}>
         <input
-          className={classNames(styles.weather__input, isInputError && styles['weather__input--error'])}
+          className={classNames(
+            styles.weather__input,
+            isInputError && styles['weather__input--error'],
+          )}
           type="text"
           value={currentCityName}
           onChange={onCityInputChange}
+          onFocus={onCityInputFocus}
           placeholder="City name"
+          ref={searchInput}
         />
         {
-          cities.length !== 0 && (
-            <ul className={classNames(styles['weather__cities-list'], !isShowCitiesList && 'hide')}>
+          cities.length !== 0 && isShowCitiesList && !isInputError && (
+            <ul className={classNames(styles['weather__cities-list'])}>
+              {
+                isCitiesLoading && (
+                  <div className={styles['weather__cities-overlay']}>
+                    <Icon
+                      className={classNames(
+                        'rotation-animation',
+                        styles['weather__cities-overlay-icon'],
+                      )}
+                      icon="loader"
+                    />
+                  </div>
+                )
+              }
               {
                 cities.map((currentCity: ICity) => (
                   <li
-                    key={`city-${currentCity.id}`}
+                    key={`city-${currentCity.id}_${getRandomInt(10, 50)}`}// eslint-disable-line @typescript-eslint/no-magic-numbers, max-len
                     className={styles['weather__cities-item']}
                   >
                     {
@@ -140,22 +202,23 @@ export const WeatherSearch: React.FunctionComponent<IProps> = ({
         }
         {
           /* FIXME: Search icon does not go back after first request,
-            if param icon={isLoading ? ... : ...}.
+            if param icon={isWeatherLoading ? ... : ...}.
             No idea how fix it, so i do this by hiding search icon */
         }
         <Button
           className={styles['weather__submit-btn']}
           isSubmit
+          isDisabled={isWeatherLoading}
         >
           <Icon
             className={classNames(
-              isLoading && 'hide',
+              isWeatherLoading && 'hide',
               styles['weather__submit-btn-icon'],
             )}
             icon="search"
           />
           {
-            isLoading && (
+            isWeatherLoading && (
               <Icon
                 className={classNames(
                   'rotation-animation',

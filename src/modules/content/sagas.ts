@@ -43,7 +43,9 @@ function* getCitiesSaga(
 
   if (!cityName) return;
 
+  yield put(CONTENT_ACTIONS.setIsCitiesLoading(true));
   const citiesData: AxiosResponse<IGetCitiesRequestData> = yield call(apiGetCities, { city: cityName });
+  yield put(CONTENT_ACTIONS.setIsCitiesLoading(false));
 
   if (citiesData.data.list) {
     if (citiesData.data.list.length > 0) {
@@ -61,7 +63,7 @@ function* getCitiesSaga(
 }
 
 function* getWeatherDataSaga(type: string, cityName: string | number): SagaIterator {
-  yield put(CONTENT_ACTIONS.setIsLoading(true));
+  yield put(CONTENT_ACTIONS.setIsWeatherLoading(true));
 
   let weatherData: AxiosResponse;
   const { content: { requestError } }: IAppState = yield select(getState);
@@ -76,7 +78,7 @@ function* getWeatherDataSaga(type: string, cityName: string | number): SagaItera
     weatherData = yield call(apiGetFiveDaysForecast, { city: cityName });
   }
 
-  yield put(CONTENT_ACTIONS.setIsLoading(false));
+  yield put(CONTENT_ACTIONS.setIsWeatherLoading(false));
 
   return weatherData;
 }

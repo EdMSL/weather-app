@@ -51,11 +51,18 @@ export const setFiveDaysForecast = (
   payload: fiveDaysForecast,
 });
 
-export const setIsLoading = (
-  isLoading: IContentRootState['isLoading'],
-): IActionReturnType<typeof isLoading> => ({
-  type: CONTENT_TYPES.SET_IS_LOADING,
-  payload: isLoading,
+export const setIsCitiesLoading = (
+  isCitiesLoading: IContentRootState['isCitiesLoading'],
+): IActionReturnType<typeof isCitiesLoading> => ({
+  type: CONTENT_TYPES.SET_IS_CITIES_LOADING,
+  payload: isCitiesLoading,
+});
+
+export const setIsWeatherLoading = (
+  isWeatherLoading: IContentRootState['isWeatherLoading'],
+): IActionReturnType<typeof isWeatherLoading> => ({
+  type: CONTENT_TYPES.SET_IS_WEATHER_LOADING,
+  payload: isWeatherLoading,
 });
 
 export const setLastCity = (

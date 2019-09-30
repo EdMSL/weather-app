@@ -20,7 +20,10 @@ export const Button: React.FunctionComponent<IButtonProps> = memo(({
   /* eslint-disable react/button-has-type */
   <button
     type={isSubmit ? 'submit' : 'button'}
-    className={classNames(styles.button, className)}
+    className={classNames(
+      styles.button,
+      className,
+    )}
     disabled={isDisabled}
     onClick={isSubmit ? null : onClick}
   >

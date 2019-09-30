@@ -19,7 +19,8 @@ const styles = require('./styles.module.scss');
 interface IStateProps {
   cities: IContentRootState['cities'],
   fiveDaysForecast: IFiveDaysForecast,
-  isLoading: IContentRootState['isLoading'],
+  isCitiesLoading: IContentRootState['isCitiesLoading'],
+  isWeatherLoading: IContentRootState['isWeatherLoading'],
   lastCity: IContentRootState['lastCity'],
   requestError: IRequestError,
 }
@@ -28,14 +29,16 @@ const mapStateToProps = ({
   content: {
     cities,
     fiveDaysForecast,
-    isLoading,
+    isCitiesLoading,
+    isWeatherLoading,
     lastCity,
     requestError,
   },
 }: IAppState): IStateProps => ({
   cities,
   fiveDaysForecast,
-  isLoading,
+  isCitiesLoading,
+  isWeatherLoading,
   lastCity,
   requestError,
 });
@@ -51,7 +54,8 @@ export type IProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToPr
 const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
   cities,
   fiveDaysForecast,
-  isLoading,
+  isCitiesLoading,
+  isWeatherLoading,
   lastCity,
   requestError,
   getCities,
@@ -62,7 +66,8 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
     <WeatherSearch
       cities={cities}
       lastCity={lastCity}
-      isLoading={isLoading}
+      isCitiesLoading={isCitiesLoading}
+      isWeatherLoading={isWeatherLoading}
       requestError={requestError}
       getCities={getCities}
       getWeather={getFiveDaysForecast}
