@@ -139,3 +139,9 @@ export const getDayOfWeek = (date?: string): string => {
 };
 
 export const generateWindSpeedStr = (windSpeed: number): string => `${Math.round(windSpeed)} km/h`;
+
+export const generateFiveDaysForecastInterval = (
+  forecastList: IFiveDaysForecast['list'],
+): string => (
+  `${generateDayMonthStr(forecastList[0].dateTxt)} - ${generateDayMonthStr(forecastList[forecastList.length - 1].dateTxt)}`
+);
