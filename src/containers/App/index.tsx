@@ -20,17 +20,17 @@ const styles = require('./styles.module.scss');
 const UnconnectedApp: React.FunctionComponent<{}> = () => (
   <ConnectedRouter history={history}>
     <main className={styles.main}>
-      <a
-        className={styles['main__github-link']}
-        href="https://github.com/EdMSL/weather-app"
-        target="_blanc"
-      >
-        <Icon
-          className={styles['main__github-icon']}
-          icon="github"
-        />
-      </a>
       <div className={styles.main__wrapper}>
+        <a
+          className={styles['main__github-link']}
+          href="https://github.com/EdMSL/weather-app"
+          target="_blanc"
+        >
+          <Icon
+            className={styles['main__github-icon']}
+            icon="github"
+          />
+        </a>
         <h1 className={styles.main__title}>Weather App</h1>
         <section className={styles.router}>
           <NavLink

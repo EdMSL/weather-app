@@ -1,5 +1,5 @@
 .weather__title {
-  width: $small-wrapper;
+  width: 100%;
   margin: 0 auto 20px;
   padding: 16px;
 
@@ -9,6 +9,10 @@
 
   background-color: $bg-title-color;
   border-radius: 10px;
+
+  @media (min-width: $mobile-width) {
+    width: $mobile-width;
+  }
 }
 
 .weather__card {
@@ -16,12 +20,11 @@
 
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  max-width: 400px;
+  align-items: center;
+  max-width: $mobile-width;
   margin: 0 auto;
   padding: 10px 20px;
 
-  font-family: $second-font;
   color: $text-main-color;
 
   background-image: radial-gradient(
@@ -52,14 +55,15 @@
 }
 
 .weather__place {
+  align-self: flex-start;
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 
 .weather__city {
-  font-size: 45px;
-  line-height: 55px;
+  font-size: 3.2em;
+  line-height: 1.4em;
   text-align: left;
 }
 
@@ -69,27 +73,42 @@
 
 .weather__info {
   margin-bottom: 20px;
+
+  @media (min-width: $mobile-width) {
+    align-self: flex-start;
+  }
 }
 
 .weather__day {
-  font-size: 25px;
-  line-height: 35px;
+  font-size: 1.8em;
+  line-height: 2.5em;
   text-transform: uppercase;
 }
 
 .weather__full-date {
-  line-height: 24px;
+  font-size: 1.8em;
+  line-height: 1.3em;
+
+  @media (min-width: $mobile-width) {
+    font-size: $main-font-size;
+    line-height: $main-line-height;
+  }
 }
 
 .weather__wind {
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 1.8em;
+  line-height: 1.3em;
+
+  @media (min-width: $mobile-width) {
+    font-size: 12px;
+    line-height: 16px;
+  }
 }
 
 .weather__humidity-block {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   margin-top: 5px;
 }
 
@@ -97,17 +116,35 @@
   fill: $text-main-color;
 }
 
+.weather__humidity {
+  font-size: 1.8em;
+  line-height: 1.3em;
+
+  @media (min-width: $mobile-width) {
+    font-size: $main-font-size;
+    line-height: $main-line-height;
+  }
+}
+
 .weather__humidity-simbol {
-  font-size: 10px;
+  font-size: 0.8em;
+  line-height: 1.2em;
+
+  @media (min-width: $mobile-width) {
+    font-size: inherit;
+    line-height: inherit;
+  }
 }
 
 .weather__temp-block {
-  position: absolute;
-  top: 30%;
-  right: 15px;
-
   display: flex;
   align-items: center;
+
+  @media (min-width: $mobile-width) {
+    position: absolute;
+    top: 30%;
+    right: 15px;
+  }
 }
 
 .weather__temp {

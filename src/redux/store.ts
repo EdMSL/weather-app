@@ -17,7 +17,7 @@ import contentSaga from '$modules/content/sagas';
 
 const contentPersistConfig: PersistConfig<IContentRootState> = {
   key: 'content',
-  whitelist: [],
+  whitelist: ['currentWeather', 'fiveDaysForecast'],
   storage,
 };
 

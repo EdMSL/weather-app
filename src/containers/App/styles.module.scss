@@ -21,15 +21,20 @@
 .main__wrapper {
   width: 100%;
   min-height: 100vh;
-  padding-top: 20px;
+  padding: 20px 5px 10px;
 
   text-align: center;
+
+  @media (min-width: $mobile-width) {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
 
 .main__title {
   @include reset-indents;
-  font-size: 25px;
-  line-height: 35px;
+  font-size: 2em;
+  line-height: 2.4em;
   font-weight: 700;
 }
 
@@ -37,9 +42,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: $small-wrapper;
+  width: 100%;
   margin: 0 auto;
-  padding-top: 20px;
+
+  @media (min-width: $mobile-width) {
+    width: $mobile-width;
+  }
 }
 
 .router__button {
