@@ -28,7 +28,6 @@ interface IStateProps {
   fiveDaysForecast: IFiveDaysForecast,
   isCitiesLoading: IContentRootState['isCitiesLoading'],
   isWeatherLoading: IContentRootState['isWeatherLoading'],
-  lastCity: IContentRootState['lastCity'],
   requestError: IRequestError,
 }
 
@@ -38,7 +37,6 @@ const mapStateToProps = ({
     fiveDaysForecast,
     isCitiesLoading,
     isWeatherLoading,
-    lastCity,
     requestError,
   },
 }: IAppState): IStateProps => ({
@@ -46,7 +44,6 @@ const mapStateToProps = ({
   fiveDaysForecast,
   isCitiesLoading,
   isWeatherLoading,
-  lastCity,
   requestError,
 });
 
@@ -63,7 +60,6 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
   fiveDaysForecast,
   isCitiesLoading,
   isWeatherLoading,
-  lastCity,
   requestError,
   getCities,
   getFiveDaysForecast,
@@ -72,7 +68,6 @@ const UnconnectedFiveDayForecast: React.FunctionComponent<IProps> = ({
   <React.Fragment>
     <WeatherSearch
       cities={cities}
-      lastCity={lastCity}
       isCitiesLoading={isCitiesLoading}
       isWeatherLoading={isWeatherLoading}
       requestError={requestError}

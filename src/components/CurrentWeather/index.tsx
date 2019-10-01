@@ -27,7 +27,6 @@ interface IStateProps {
   currentWeather: ICurrentWeather,
   isCitiesLoading: IContentRootState['isCitiesLoading'],
   isWeatherLoading: IContentRootState['isWeatherLoading'],
-  lastCity: IContentRootState['lastCity'],
   requestError: IRequestError,
 }
 
@@ -37,7 +36,6 @@ const mapStateToProps = ({
     currentWeather,
     isCitiesLoading,
     isWeatherLoading,
-    lastCity,
     requestError,
   },
 }: IAppState): IStateProps => ({
@@ -45,7 +43,6 @@ const mapStateToProps = ({
   currentWeather,
   isCitiesLoading,
   isWeatherLoading,
-  lastCity,
   requestError,
 });
 
@@ -62,7 +59,6 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
   currentWeather,
   isCitiesLoading,
   isWeatherLoading,
-  lastCity,
   requestError,
   getCities,
   getCurrentWeather,
@@ -71,7 +67,6 @@ const UnconnectedCurrentWeather: React.FunctionComponent<IProps> = ({
   <React.Fragment>
     <WeatherSearch
       cities={cities}
-      lastCity={lastCity}
       isCitiesLoading={isCitiesLoading}
       isWeatherLoading={isWeatherLoading}
       requestError={requestError}

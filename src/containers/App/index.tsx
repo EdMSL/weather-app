@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import { ConnectedRouter } from 'connected-react-router';
 import {
@@ -10,7 +9,7 @@ import {
 } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { history, IAppState } from '$redux/store';
+import { history } from '$redux/store';
 import { PathName } from '$constants/paths';
 import { CurrentWeather } from '$components/CurrentWeather';
 import { FiveDayForecast } from '$components/FiveDaysForecast';
@@ -18,21 +17,7 @@ import { Icon } from '$components/UI/Icon';
 
 const styles = require('./styles.module.scss');
 
-interface IStateProps {
-  currentWeather: IAppState['content']['currentWeather'],
-}
-
-const mapStateToProps = ({
-  content: { currentWeather },
-}: IAppState): IStateProps => ({
-  currentWeather,
-});
-
-export type IAppProps = ReturnType<typeof mapStateToProps>;
-
-const UnconnectedApp: React.FunctionComponent<IAppProps> = ({
-  currentWeather,
-}) => (
+const UnconnectedApp: React.FunctionComponent<{}> = () => (
   <ConnectedRouter history={history}>
     <main className={styles.main}>
       <a
@@ -87,4 +72,4 @@ const UnconnectedApp: React.FunctionComponent<IAppProps> = ({
   </ConnectedRouter>
 );
 
-export const App = connect(mapStateToProps)(hot(module)(UnconnectedApp));
+export const App = hot(module)(UnconnectedApp);
