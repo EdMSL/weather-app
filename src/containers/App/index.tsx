@@ -14,6 +14,7 @@ import { history, IAppState } from '$redux/store';
 import { PathName } from '$constants/paths';
 import { CurrentWeather } from '$components/CurrentWeather';
 import { FiveDayForecast } from '$components/FiveDaysForecast';
+import { Icon } from '$components/UI/Icon';
 
 const styles = require('./styles.module.scss');
 
@@ -34,6 +35,16 @@ const UnconnectedApp: React.FunctionComponent<IAppProps> = ({
 }) => (
   <ConnectedRouter history={history}>
     <main className={styles.main}>
+      <a
+        className={styles['main__github-link']}
+        href="https://github.com/EdMSL/weather-app"
+        target="_blanc"
+      >
+        <Icon
+          className={styles['main__github-icon']}
+          icon="github"
+        />
+      </a>
       <div className={styles.main__wrapper}>
         <h1 className={styles.main__title}>Weather App</h1>
         <section className={styles.router}>
