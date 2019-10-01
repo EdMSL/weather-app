@@ -1,5 +1,9 @@
 # Weather app
 
+---
+[View finished](https://edmsl-weather-app.herokuapp.com)
+---
+
 Simple weather app with two possibilities: getting current weather for city and getting forecast on five days. Used data from [openweathermap.org](https://openweathermap.org)<br>
 
 App created using my react-typescript [boilerplate](https://github.com/EdMSL/react-typescript-boilerplate).
