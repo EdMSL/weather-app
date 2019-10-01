@@ -19,4 +19,12 @@
   &:active {
     background-color: shade-func($button-main-bg-color, 10%);
   }
+
+  &:disabled {
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $button-main-bg-color;
+    }
+  }
 }

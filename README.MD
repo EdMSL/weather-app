@@ -9,6 +9,7 @@ App created using my react-typescript [boilerplate](https://github.com/EdMSL/rea
 All icons from [www.flaticon.com](https://www.flaticon.com/)</br>
 Flags icons made by [Freepik](https://www.flaticon.com/authors/freepik)</br>
 Favicon icon made by [Good Ware](https://www.flaticon.com/authors/good-ware)<br>
+GitHub icon made by [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect)<br>
 
 Weather icons made by:
 * [Eucalyp](https://www.flaticon.com/authors/eucalyp)
