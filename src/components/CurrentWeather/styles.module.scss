@@ -7,7 +7,7 @@
   line-height: 26px;
   font-weight: 400;
 
-  background-color: $bg-forecast-card-color;
+  background-color: $bg-title-color;
   border-radius: 10px;
 }
 
@@ -26,10 +26,10 @@
 
   background-image: radial-gradient(
       ellipse 202% 185% at bottom right,
-      $bg-card-first-color 25%,
-      $bg-card-second-color 50%,
-      $bg-card-third-color 50%,
-      $bg-card-third-color 100%
+      transparentize(tint-func($primary-color, 20%), 0.2) 25%,
+      transparentize($primary-color, 0.2) 50%,
+      transparentize(shade-func($primary-color, 10%), 0.2) 50%,
+      transparentize(shade-func($primary-color, 10%), 0.2) 100%
     ),
     linear-gradient(
       to top,

@@ -1,6 +1,8 @@
 # Weather app
 
-Simple weather app with two possibilities: getting current weather for city and getting forecast on five days. Used data from [openweathermap.org](https://openweathermap.org)
+Simple weather app with two possibilities: getting current weather for city and getting forecast on five days. Used data from [openweathermap.org](https://openweathermap.org)<br>
+
+App created using my react-typescript [boilerplate](https://github.com/EdMSL/react-typescript-boilerplate).
 
 ### Contributing
 
@@ -21,4 +23,4 @@ Weather icons made by:
 
 ### License
 
-This bilerplate is [MIT licensed](./LICENSE).
+This app is [MIT licensed](./LICENSE).

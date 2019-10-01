@@ -7,7 +7,7 @@
   line-height: 26px;
   font-weight: 400;
 
-  background-color: $bg-forecast-card-color;
+  background-color: $bg-title-color;
   border-radius: 10px;
 }
 
@@ -28,7 +28,7 @@
   align-items: center;
   padding: 16px;
 
-  background-color: $bg-forecast-card-color;
+  background-color: $bg-title-color;
   border-radius: 10px;
 
   &:first-child {
@@ -72,7 +72,7 @@
   flex-basis: 140px;
   margin-bottom: 20px;
 
-  background-color: $bg-forecast-card-color;
+  background-color: $bg-title-color;
 
   &:nth-child(6n) {
     border-right: none;
@@ -83,7 +83,7 @@
   padding-top: $forecast-card-indent;
   padding-bottom: $forecast-card-indent;
 
-  background-color: $bg-forecast-card-header-color;
+  background-color: shade-func($bg-title-color, 10%);
 }
 
 .weather__card-body {

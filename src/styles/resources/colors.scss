@@ -1,26 +1,30 @@
-$text-main-color: rgb(255, 255, 255);
-
-$link-main-color: rgb(69, 1, 255);
-
-$bg-white-color: rgb(255, 255, 255);
-$bg-main-gradient-first-color: rgb(0, 115, 141);
-$bg-main-gradient-second-color: rgb(0, 202, 192);
-$bg-card-first-color: rgba(0, 159, 170, 0.8);
-$bg-card-second-color: rgba(0, 162, 180, 0.8);
-$bg-card-third-color: rgba(6, 196, 209, 0.8);
-$bg-forecast-card-color: rgba(0, 115, 141, 0.5);
-$bg-forecast-card-header-color: rgba(0, 76, 94, 0.5);
-$bg-forecast-card-hover-color: rgba(0, 107, 131, 0.5);
-
-$overlay-main-color: transparentize($text-main-color, 0.3);
+@import "./functions.scss";
 
 $primary-color: rgb(0, 165, 184);
-$secondary-color: rgb(2, 88, 154);
+$translucent-primary-color: transparentize($primary-color, 0.5);
 
-$button-main-bg-color: $primary-color;
-$button-main-text-color: rgb(255, 255, 255);
-$button-secondary-text-color: rgb(35, 36, 35);
+$text-main-color: rgb(255, 255, 255);
 
 $error-color: rgb(211, 42, 42);
 
-$cities-list-bg-color: transparentize($primary-color, 0.2);
+$link-main-color: $text-main-color;
+
+$bg-main-gradient-first-color: shade-func($primary-color, 25%) 0%;
+$bg-main-gradient-second-color:
+  adjust-color(
+  $primary-color,
+  $green: 39,
+  $blue: 20
+);
+$bg-forecast-card-hover-color: $translucent-primary-color;
+$bg-title-color:
+  adjust-color(
+  $translucent-primary-color,
+  $green: -50,
+  $blue: -43
+);
+
+$overlay-main-color: transparentize($text-main-color, 0.3);
+
+$button-main-bg-color: $primary-color;
+$button-main-text-color: $text-main-color;
