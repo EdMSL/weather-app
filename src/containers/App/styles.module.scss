@@ -85,6 +85,11 @@
   text-align: center;
 }
 
+.main__text {
+  @include reset-indents;
+  margin-bottom: 20px;
+}
+
 @keyframes show {
   0% {
     opacity: 0;

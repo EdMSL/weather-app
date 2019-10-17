@@ -32,6 +32,15 @@ const UnconnectedApp: React.FunctionComponent<{}> = () => (
           />
         </a>
         <h1 className={styles.main__title}>Weather App</h1>
+        <p className={styles.main__text}>
+          App uses data from
+          <a
+            href="https://openweathermap.org"
+            className={styles.footer__link}
+          >
+            {' openweathermap.org'}
+          </a>
+        </p>
         <section className={styles.router}>
           <NavLink
             exact
