@@ -62,7 +62,7 @@ const UnconnectedApp: React.FunctionComponent<{}> = () => (
               component={FiveDayForecast}
             />
             <Redirect
-              from="*"
+              from="/*"
               to={PathName.CURRENT_WEATHER}
             />
           </Switch>
