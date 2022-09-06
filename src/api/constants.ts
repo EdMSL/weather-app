@@ -119,7 +119,7 @@ export interface IFiveDaysForecastRequestData {
 }
 
 const API_KEY = '09864f104fd238ceb72091abd292903c';
-const REQUEST_PARAMETERS = `APPID=${API_KEY}`;
+const REQUEST_PARAMETERS = `appid=${API_KEY}`;
 
 export const ApiErrorStatusCode = {
   START_ERROR_CODES: 300,

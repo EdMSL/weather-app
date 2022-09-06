@@ -5,7 +5,7 @@ module.exports = function (path) {
     {
       from: `${path}/*`,
       to: '[name].[ext]',
-      ignore: /\.html$/,
+      ignore: [/\.html$/],
     },
   ]);
 };

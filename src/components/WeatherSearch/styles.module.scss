@@ -62,10 +62,6 @@
 
 .weather__cities-list {
   @include reset-indents;
-  // position: absolute;
-  // top: 38px;
-  // z-index: 5;
-
   width: 100%;
 
   list-style: none;

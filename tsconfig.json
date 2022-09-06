@@ -5,6 +5,7 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "allowJs": true,
     "noEmit": true,
     "module": "commonjs",
