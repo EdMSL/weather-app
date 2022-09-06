@@ -48,11 +48,6 @@
       "git add"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "engines": {
     "node": "10.24"
   },
