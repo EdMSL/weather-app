@@ -1,7 +1,7 @@
 # Weather app
 
 ---
-[View finished](https://edmsl-weather-app.herokuapp.com)
+[View finished](https://edmsl-weather-app.glitch.me)
 ---
 
 Simple weather app with two possibilities: getting current weather for city and getting forecast on five days. Used data from [openweathermap.org](https://openweathermap.org)<br>
